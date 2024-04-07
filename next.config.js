@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   webpack(config) {
     config.module.rules.push({
@@ -7,6 +8,15 @@ module.exports = {
     });
 
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/posts",
+        permanent: true,
+      },
+    ];
   },
   async rewrites() {
     return [

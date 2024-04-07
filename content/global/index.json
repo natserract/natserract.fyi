@@ -1,24 +1,20 @@
 {
   "header": {
     "icon": {
-      "name": "Tina",
+      "name": "Natserract",
       "color": "orange",
       "style": "float"
     },
-    "name": "Tina Starter",
+    "name": "Natserract",
     "color": "default",
     "nav": [
       {
-        "href": "",
-        "label": "Home"
+        "href": "posts",
+        "label": "Blog"
       },
       {
         "href": "about",
         "label": "About"
-      },
-      {
-        "href": "posts",
-        "label": "Blog"
       }
     ]
   },
@@ -33,6 +29,6 @@
   "theme": {
     "color": "blue",
     "font": "sans",
-    "darkMode": "system"
+    "darkMode": "light"
   }
 }

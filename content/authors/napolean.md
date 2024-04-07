@@ -1,7 +1,5 @@
 ---
-name: Napolean
-avatar: /uploads/llama-2.avif
+name: Natserract
+avatar: /uploads/31182611.jpeg
 ---
-
-
 
