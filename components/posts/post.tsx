@@ -139,7 +139,7 @@ export const Post = (props: PostType) => {
       <Container width="small" className={`flex-1 pb-2`} size="large">
         <h2
           data-tina-field={tinaField(props, "title")}
-          className={`w-full relative	mb-8 text-6xl font-extrabold tracking-normal text-center title-font`}
+          className={`w-full relative	mb-8 text-3xl md:text-6xl font-extrabold tracking-normal text-center leading-normal md:leading-[5rem]`}
         >
           <span
             className={`bg-clip-text text-transparent bg-gradient-to-r ${
@@ -190,13 +190,13 @@ export const Post = (props: PostType) => {
           >
             <img
               src={props.heroImg}
-              className="absolute block rounded-lg w-full h-auto blur-2xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
+              className="absolute block w-full h-auto max-h-[550px] object-cover blur-2xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
               aria-hidden="true"
             />
             <img
               src={props.heroImg}
               alt={props.title}
-              className="relative z-10 mb-14 block rounded-lg w-full h-auto opacity-100"
+              className="relative z-10 mb-14 block w-full h-auto max-h-[550px] object-cover opacity-100"
             />
           </div>
         </div>

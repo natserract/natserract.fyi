@@ -69,7 +69,7 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
         <div className="flex items-center justify-between gap-6">
           <h4 className="select-none text-2xl font-bold tracking-tight my-4 transition duration-150 ease-out transform">
             <Link
-              href="/"
+              href="/posts"
               className="flex gap-1 items-center whitespace-nowrap tracking-[.002em]"
             >
               <span className="block" data-tina-field={tinaField(data, "name")}>
