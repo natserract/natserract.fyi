@@ -15,6 +15,14 @@
       {
         "href": "about",
         "label": "About"
+      },
+      {
+        "href": "projects",
+        "label": "Projects"
+      },
+      {
+        "href": "talks",
+        "label": "Talks"
       }
     ]
   },
@@ -23,7 +31,8 @@
     "social": {
       "facebook": "/",
       "twitter": "/",
-      "instagram": "/"
+      "instagram": "/",
+      "github": "https://github.com/natserract"
     }
   },
   "theme": {

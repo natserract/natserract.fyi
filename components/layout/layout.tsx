@@ -18,7 +18,9 @@ export const Layout = ({
   return (
     <>
       <Head>
-        <title>Tina</title>
+        <title>
+          Natserract. Optinions Are My Own - Software Engineering Blog
+        </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         {data.theme.font === "nunito" && (
           <>

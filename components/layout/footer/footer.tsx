@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { FaFacebookF, FaGithub, FaTwitter } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { Container } from "../../util/container";
 import { RawRenderer } from "./rawRenderer";
 import { useTheme } from "..";
@@ -9,7 +8,7 @@ import { Icon } from "../../util/icon";
 
 export const Footer = ({ data, icon, rawData }) => {
   const theme = useTheme();
-  const socialIconClasses = "h-7 w-auto";
+  const socialIconClasses = "h-5 w-auto";
   const socialIconColorClasses = {
     blue: "text-blue-500 dark:text-blue-400 hover:text-blue-300",
     teal: "text-teal-500 dark:text-teal-400 hover:text-teal-300",
@@ -42,87 +41,58 @@ export const Footer = ({ data, icon, rawData }) => {
       ? footerColor.primary[theme.color]
       : footerColor.default;
 
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
   return (
     <footer className={`bg-gradient-to-br ${footerColorCss}`}>
-      <Container className="relative" size="small">
-        <div className="flex justify-between items-center gap-6 flex-wrap">
-          <Link
-            href="/"
-            className="group mx-2 flex items-center font-bold tracking-tight text-gray-400 dark:text-gray-300 opacity-50 hover:opacity-100 transition duration-150 ease-out whitespace-nowrap"
-          >
-            <Icon
-              parentColor={data.color}
-              data={{
-                name: icon.name,
-                color: data.color === "primary" ? "primary" : icon.color,
-                style: icon.style,
-              }}
-              className="inline-block h-10 w-auto group-hover:text-orange-500"
-            />
-          </Link>
+      <Container size="custom" className="py-8 relative z-10 max-w-8xl">
+        <div className="flex justify-between items-center flex-wrap">
+          <span>© {currentYear} Alfin Surya. Opinions are my own.</span>
+
           <div className="flex gap-4">
-            {data.social && data.social.facebook && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.facebook}
-                target="_blank"
-              >
-                <FaFacebookF
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {data.social && data.social.twitter && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.twitter}
-                target="_blank"
-              >
-                <FaTwitter
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {data.social && data.social.instagram && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.instagram}
-                target="_blank"
-              >
-                <AiFillInstagram
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {data.social && data.social.github && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={data.social.github}
-                target="_blank"
-              >
-                <FaGithub
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      data.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
+            <a
+              className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+              href={data.social.github}
+              target="_blank"
+            >
+              <FaGithub
+                className={`${socialIconClasses} ${
+                  socialIconColorClasses[
+                    data.color === "primary" ? "primary" : theme.color
+                  ]
+                }`}
+              />
+            </a>
+
+            <a
+              className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+              href="https://www.linkedin.com/in/alfinsurya/"
+              target="_blank"
+            >
+              <FaLinkedin
+                className={`${socialIconClasses} ${
+                  socialIconColorClasses[
+                    data.color === "primary" ? "primary" : theme.color
+                  ]
+                }`}
+              />
+            </a>
+
+            <a
+              className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+              href="mailto:alfins132@gmail.com"
+              target="_blank"
+            >
+              <FaEnvelope
+                className={`${socialIconClasses} ${
+                  socialIconColorClasses[
+                    data.color === "primary" ? "primary" : theme.color
+                  ]
+                }`}
+              />
+            </a>
           </div>
-          <RawRenderer parentColor={data.color} rawData={rawData} />
         </div>
         <div
           className={`absolute h-1 bg-gradient-to-r from-transparent ${
