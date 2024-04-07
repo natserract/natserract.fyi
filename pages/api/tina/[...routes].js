@@ -1,5 +1,6 @@
 import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer";
 import { AuthJsBackendAuthProvider, TinaAuthJSOptions } from "tinacms-authjs";
+import process from "node:process";
 
 import databaseClient from "../../../tina/__generated__/databaseClient";
 
