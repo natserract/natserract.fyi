@@ -2,7 +2,7 @@
 title: About
 blocks:
   - body: >
-      ## About
+      # About
 
 
       My name is Alfin Surya. I'm from Bali and I am a professional web-focused
