@@ -136,10 +136,10 @@ export const Post = (props: PostType) => {
 
   return (
     <Section className="flex-1">
-      <Container width="small" className={`flex-1 pb-2`} size="large">
+      <Container width="small" className={`flex-1 pt-10 pb-2`} size="medium">
         <h2
           data-tina-field={tinaField(props, "title")}
-          className={`w-full relative	mb-8 text-3xl md:text-6xl font-extrabold tracking-normal text-center leading-normal md:leading-[5rem]`}
+          className={`w-full relative	mb-8 text-4xl md:text-6xl font-extrabold tracking-normal text-center leading-snug md:leading-[5rem]`}
         >
           <span
             className={`bg-clip-text text-transparent bg-gradient-to-r ${
@@ -151,7 +151,7 @@ export const Post = (props: PostType) => {
         </h2>
         <div
           data-tina-field={tinaField(props, "author")}
-          className="flex items-center justify-center mb-16"
+          className="flex items-center justify-center mb-10"
         >
           {props.author && (
             <>
@@ -201,13 +201,17 @@ export const Post = (props: PostType) => {
           </div>
         </div>
       )}
-      <Container className={`flex-1 pt-4`} width="small" size="large">
-        <div
+      <Container
+        className={`flex-1 !pb-10 sm:!pb-24`}
+        width="small"
+        size="medium"
+      >
+        <article
           data-tina-field={tinaField(props, "_body")}
-          className="prose dark:prose-dark w-full max-w-none"
+          className="prose dark:prose-dark prose-xl w-full max-w-none"
         >
           <TinaMarkdown components={components} content={props._body} />
-        </div>
+        </article>
       </Container>
     </Section>
   );
