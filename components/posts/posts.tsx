@@ -19,9 +19,19 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
     yellow: "group-hover:text-yellow-500 dark:group-hover:text-yellow-300",
   };
 
+  const sortedDateByDate = React.useMemo(() => {
+    return data.slice().sort((a, b) => {
+      const [left, right] = [
+        new Date(a.node.date).getTime(),
+        new Date(b.node.date).getTime(),
+      ];
+      return right - left;
+    });
+  }, [data]);
+
   return (
     <>
-      {data.map((postData) => {
+      {sortedDateByDate.map((postData) => {
         const post = postData.node;
         const date = new Date(post.date);
         let formattedDate = "";
