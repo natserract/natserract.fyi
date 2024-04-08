@@ -31,7 +31,7 @@ group by a.id
 +-----+-------------------------+
 ```
 
-> Group By Asset Id
+> Group By **Asset Id**
 
 ### Window Functions
 
@@ -53,7 +53,7 @@ inner join assets a on a.id = oi."assetId"
 +-----+-------------------------+
 ```
 
-Inside window functions, as you can see the operations is performed without the GROUP BY clause. But, the interesting parts is in this section:
+Inside window functions, as you can see the operations is performed without the `GROUP BY` clause. But, the interesting parts is in this section:
 
 ```sql
 count(a.id) OVER(partition by oi."assetId") as "Count"
@@ -61,9 +61,9 @@ count(a.id) OVER(partition by oi."assetId") as "Count"
 
 ### Agregate function
 
-It’s called window functions, because of the aggregate functions is operated with the OVER clause.
+It’s called window functions, because of the aggregate functions is operated with the `OVER` clause.
 
-* The pattern look like this:
+* **The pattern look like this:**
 
 ```sql
 <function_name>(<argument(s)>) OVER(PARTITION BY <column(s)> ORDER BY <column(s)>) <alias>
@@ -73,7 +73,7 @@ It’s called window functions, because of the aggregate functions is operated w
 
 Over clause, defines the size of window you want to create. Example:
 
-* OVER() if the parameter’s empty, then the partition is created based on the calculations of the whole data. If referring to the case above:
+* `OVER()` if the parameter’s empty, then the partition is created based on the calculations of the whole data. If referring to the case above:
 
 ```sql
   λ> select 
@@ -91,7 +91,7 @@ Over clause, defines the size of window you want to create. Example:
   +-----+-------------------------+
 ```
 
-* Create window partitions, based on grouping columns:
+* **Create window partitions, based on grouping columns:**
 
 ```sql
 count(a.id) OVER(partition by oi."assetId")
@@ -99,7 +99,7 @@ count(a.id) OVER(partition by oi."assetId")
 
 > So, in the case above, it means count based on  the existing Asset Id , within Asset ID 15 with a total of 2, and Asset ID 19
 
-* Create window + sorting partitions:
+* **Create window + sorting partitions:**
 
 ```sql
 λ> select 
@@ -120,11 +120,11 @@ DENSE_RANK() OVER(partition by oi."assetId" order by oi.price desc) as "Rank"
 +-----+---------------------------+------------+---------------+
 ```
 
-> DENSE\_RANK() is used to view rank by largest price in order
+> `DENSE_RANK()` is used to view rank by largest price in order
 
 ### Why Window Functions
 
-So far I think, GROUP BY is less flexible for query operations that require data from other tables:
+So far I think, `GROUP BY` is less flexible for query operations that require data from other tables:
 
 ```sql
 λ> select 
@@ -158,7 +158,7 @@ from order_items oi
     inner join assets a on a.id = oi."assetId"
 ```
 
-> TIPS: If the problem statement does not require combining both aggregated and non-aggregated columns in a single query, then your best approach is to use a GROUP BY clause instead.
+> TIPS: If the problem statement does not require combining both aggregated and non-aggregated columns in a single query, then your best approach is to use a `GROUP BY` clause instead.
 
 ### CTE + Window Functions + Sub Query
 
@@ -179,7 +179,7 @@ where lae."assetId" in (
 and rank=1
 ```
 
-> rank=1 is used to get first rank from latest asset event date order by ae."createdAt" desc
+> `rank=1` is used to get first rank from latest asset event date `order by ae."createdAt" desc`
 
 ### Additional reading:
 
