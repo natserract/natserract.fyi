@@ -45,11 +45,16 @@ export const Footer = ({ data, icon, rawData }) => {
   const currentYear = currentDate.getFullYear();
 
   return (
-    <footer className={`bg-gradient-to-br ${footerColorCss}`}>
-      <Container size="custom" className="py-8 relative z-10 max-w-8xl">
+    <footer
+      className={`bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-1000 ${footerColorCss}`}
+    >
+      <Container
+        size="custom"
+        className="py-8 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-1000 relative z-10 max-w-8xl"
+      >
         <div className="flex justify-center gap-4 sm:justify-between items-center flex-wrap">
           <span className="text-xs">
-            © {currentYear} Alfin Surya. Opinions are my own.
+            © {currentYear} Alfin Surya. Opinions Are My Own
           </span>
 
           <div className="flex gap-4">

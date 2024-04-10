@@ -6,14 +6,14 @@ import { Layout } from "../components/layout";
 import { InferGetStaticPropsType } from "next";
 
 export default function HomePage(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const posts = props.data.postConnection.edges;
 
   return (
     <Layout>
       <Section className="flex-1">
-        <Container size="large" width="small">
+        <Container size="medium" width="small">
           <Posts data={posts} />
         </Container>
       </Section>

@@ -53,7 +53,7 @@ function ModalDialog(
                 <Link
                   key={item.href}
                   href={`/${item.href}`}
-                  className={`relative select-none text-lg inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 py-8 px-4 ${
+                  className={`relative select-none text-xl inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 hover:underline py-8 px-4 ${
                     activeItem ? `` : `opacity-70`
                   }`}
                 >
