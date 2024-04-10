@@ -4,7 +4,7 @@ excerpt: >
   Window function is actually quite similar like `groupBy`, but I think it’s
   more powerful and flexible. It’s purpose to group a set of data and apply
   aggregate operations, such as `AVG`, `MAX`, etc.
-author: content/authors/napolean.md
+author: content/authors/natserract.md
 date: 2023-08-14T16:00:00.000Z
 ---
 
@@ -15,16 +15,16 @@ Window function is actually quite similar like `groupBy`, but I think it’s mor
 ### Group By:
 
 ```sql
-λ> select 
+λ> select
   a.id as "ID",
   a.code as "Code",
   count(a.id) as "Count"
-from order_items oi 
-inner join assets a on a.id = oi."assetId" 
+from order_items oi
+inner join assets a on a.id = oi."assetId"
 group by a.id
 
 +-------------------------------+
-| ID  |   Code     |   Count  | 
+| ID  |   Code     |   Count  |
 +-------------------------------+
 | 15  |  1231212   |    2     |
 | 19  |  12341928  |    2     |
@@ -36,7 +36,7 @@ group by a.id
 ### Window Functions
 
 ```sql
-λ> select 
+λ> select
   a.id as "ID",
   a.code as "Code",
   count(a.id) OVER(partition by oi."assetId") as "Count"
@@ -44,7 +44,7 @@ from order_items oi
 inner join assets a on a.id = oi."assetId"
 
 +-------------------------------+
-| ID  |   Code     |   Count  | 
+| ID  |   Code     |   Count  |
 +-------------------------------+
 | 15  |  1231212   |    2     |
 | 15  |  1231212   |    2     |
@@ -63,7 +63,7 @@ count(a.id) OVER(partition by oi."assetId") as "Count"
 
 It’s called window functions, because of the aggregate functions is operated with the `OVER` clause.
 
-* **The pattern look like this:**
+- **The pattern look like this:**
 
 ```sql
 <function_name>(<argument(s)>) OVER(PARTITION BY <column(s)> ORDER BY <column(s)>) <alias>
@@ -73,10 +73,10 @@ It’s called window functions, because of the aggregate functions is operated w
 
 Over clause, defines the size of window you want to create. Example:
 
-* `OVER()` if the parameter’s empty, then the partition is created based on the calculations of the whole data. If referring to the case above:
+- `OVER()` if the parameter’s empty, then the partition is created based on the calculations of the whole data. If referring to the case above:
 
 ```sql
-  λ> select 
+  λ> select
     ...
     count(a.id) OVER() as "Count"
     ...
@@ -91,18 +91,18 @@ Over clause, defines the size of window you want to create. Example:
   +-----+-------------------------+
 ```
 
-* **Create window partitions, based on grouping columns:**
+- **Create window partitions, based on grouping columns:**
 
 ```sql
 count(a.id) OVER(partition by oi."assetId")
 ```
 
-> So, in the case above, it means count based on  the existing Asset Id , within Asset ID 15 with a total of 2, and Asset ID 19
+> So, in the case above, it means count based on the existing Asset Id , within Asset ID 15 with a total of 2, and Asset ID 19
 
-* **Create window + sorting partitions:**
+- **Create window + sorting partitions:**
 
 ```sql
-λ> select 
+λ> select
 ...
 oi.price as "Price",
 oi.id as "Item ID",
@@ -127,23 +127,23 @@ DENSE_RANK() OVER(partition by oi."assetId" order by oi.price desc) as "Rank"
 So far I think, `GROUP BY` is less flexible for query operations that require data from other tables:
 
 ```sql
-λ> select 
-oi.price, -- non agregate 
+λ> select
+oi.price, -- non agregate
 sum(oi.price) -- agregate,
 ...
 ...
-from order_items oi 
-inner join assets a on a.id = oi."assetId" 
+from order_items oi
+inner join assets a on a.id = oi."assetId"
 inner join asset_events ae on ae."assetId" = a.id
 ...
 group by 1, ... ? ..?
 --
 -- Error:
--- column "oi.price"  must appear in the GROUP BY clause 
+-- column "oi.price"  must appear in the GROUP BY clause
 -- or be used in an aggregate function
 ```
 
-The problem’s, I have to define group by value above  per each non aggregate data that will be shown, besides that the result might not be valid. Maybe there’s another way and approach with group by, but it seems more complex.
+The problem’s, I have to define group by value above per each non aggregate data that will be shown, besides that the result might not be valid. Maybe there’s another way and approach with group by, but it seems more complex.
 
 Well, that’s why window function can solve the complexity problem above. Just by adding:
 
@@ -166,10 +166,10 @@ In this case, get last asset events of each asset booked by the customer
 
 ```sql
 with latest_asset_events as (
- select *, 
+ select *,
  	DENSE_RANK() OVER(PARTITION BY ae."assetId" order by ae."createdAt" desc) AS rank
    from asset_events ae
-) select * from latest_asset_events lae 
+) select * from latest_asset_events lae
 where lae."assetId" in (
   select a.id
   from orders o
@@ -183,5 +183,5 @@ and rank=1
 
 ### Additional reading:
 
-* SQL Window Functions performance [https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf](https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf)
-* [https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/](https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/)
+- SQL Window Functions performance [https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf](https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf)
+- [https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/](https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/)
