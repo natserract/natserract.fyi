@@ -39,14 +39,11 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           formattedDate = format(date, "MMM dd, yyyy");
         }
 
-        let classes =
-          "group block px-6 sm:px-8 md:px-10 py-10  last:mb-0 from-gray-50 to-gray-100 border-b last:border-b-0 border-zinc-800 dark:from-gray-900 dark:to-gray-1000 transition-all duration-150 ease-out hover:shadow-md hover:to-gray-50 dark:hover:to-gray-800";
-
         return (
           <Link
             key={post._sys.filename}
             href={`/posts/` + post._sys.filename}
-            className={classes}
+            className="group block px-6 sm:px-8 md:px-10 py-10  last:mb-0 from-gray-50 to-gray-100 border-b last:border-b-0 border-zinc-800 dark:from-gray-900 dark:to-gray-1000 transition-all duration-150 ease-out hover:shadow-md hover:to-gray-50 dark:hover:to-gray-800"
           >
             <h3
               className={`text-gray-700 dark:text-white text-3xl lg:text-4xl font-semibold title-font mb-5 transition-all duration-150 ease-out ${
