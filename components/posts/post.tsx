@@ -36,6 +36,9 @@ const components: Components<{
     children: TinaMarkdownContent;
     disclaimer?: TinaMarkdownContent;
   };
+  Delete: {
+    text: string;
+  };
 }> = {
   code_block: (props) => <Prism {...props} />,
   BlockQuote: (props: {
@@ -50,6 +53,9 @@ const components: Components<{
         </blockquote>
       </div>
     );
+  },
+  Delete: (props) => {
+    return <del>{props.text}</del>;
   },
   DateTime: (props) => {
     const dt = React.useMemo(() => {
