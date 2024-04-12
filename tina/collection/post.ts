@@ -1,11 +1,19 @@
 import type { Collection } from "tinacms";
 
+import { stringToSlug } from "../utils/string";
+
 const Post: Collection = {
   label: "Blog Posts",
   name: "post",
   path: "content/posts",
   format: "mdx",
   ui: {
+    filename: {
+      readonly: true,
+      slugify: (values) => {
+        return stringToSlug(values?.title || "no-topic");
+      },
+    },
     router: ({ document }) => {
       return `/posts/${document._sys.filename}`;
     },
@@ -42,6 +50,11 @@ const Post: Collection = {
         dateFormat: "MMMM DD YYYY",
         timeFormat: "hh:mm A",
       },
+    },
+    {
+      type: "string",
+      label: "Image Source",
+      name: "imgSource",
     },
     {
       type: "rich-text",
