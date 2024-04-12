@@ -183,7 +183,7 @@ export const Post = (props: PostType) => {
         </div>
       </Container>
       {props.heroImg && (
-        <div className="px-4 pt-2 pb-2 sm:pb-8 w-full">
+        <div className="px-4 pt-2 pb-2 sm:pb-8 mb-14 w-full">
           <div
             data-tina-field={tinaField(props, "heroImg")}
             className="relative max-w-4xl lg:max-w-5xl mx-auto"
@@ -196,9 +196,19 @@ export const Post = (props: PostType) => {
             <img
               src={props.heroImg}
               alt={props.title}
-              className="relative z-10 mb-14 block w-full h-auto max-h-[550px] object-cover opacity-100"
+              className="relative z-10 block w-full h-auto max-h-[550px] object-cover opacity-100"
             />
           </div>
+
+          {props.imgSource && (
+            <a
+              href={props.imgSource}
+              target="_blank"
+              className="text-xs text-gray-400 block text-center underline pt-10"
+            >
+              {props.imgSource}
+            </a>
+          )}
         </div>
       )}
       <Container

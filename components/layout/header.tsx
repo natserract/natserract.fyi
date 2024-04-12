@@ -68,10 +68,10 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
     >
       <Container size="custom" className="py-0 relative z-10 max-w-8xl">
         <div className="flex items-center justify-between gap-6">
-          <h4 className="select-none text-2xl font-bold tracking-tight my-4 transition duration-150 ease-out transform">
+          <h4 className="select-none text-2xl text-gray-800 font-bold tracking-tight my-4 transition duration-150 ease-out transform">
             <Link
               href="/posts"
-              className="flex gap-1 items-center whitespace-nowrap tracking-[.002em]"
+              className="flex f gap-1 items-center whitespace-nowrap tracking-[.002em]"
             >
               <span className="block" data-tina-field={tinaField(data, "name")}>
                 {data.name}

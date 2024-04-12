@@ -22,10 +22,12 @@ export const Layout = ({
           Natserract. Optinions Are My Own - Software Engineering Blog
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+
         {data.theme.font === "nunito" && (
           <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link
               href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&display=swap"
               rel="stylesheet"
@@ -34,8 +36,6 @@ export const Layout = ({
         )}
         {data.theme.font === "lato" && (
           <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link
               href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"
               rel="stylesheet"
