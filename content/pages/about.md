@@ -10,7 +10,7 @@ blocks:
 
 
       I am mostly self-taught, and I teach myself whatever topic interests me.
-      Most of the times learn things from the hard way, I mainly work with
+      Most of the times [learn things from the hard way](https://www.vice.com/en/article/53dpeq/in-defense-of-learning-code-the-hard-way), I mainly work with
       JavaScript/TypeScript, Python, and Elixir. I've been involves in fullstack
       development, AI, and functional programming. Currently open to
       collaboration, discussion and remote work.
