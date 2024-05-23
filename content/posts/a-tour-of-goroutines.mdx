@@ -1,0 +1,928 @@
+---
+title: A Tour of Goroutines
+excerpt: >
+  Go merupakan bahasa pemrogaman yang banyak digunakan saat ini karena dikenal dengan fitur utamanya sebagai first class citizen untuk concurrency problems. Go menggunakan pendekatan concurrency yang cukup berbeda dari beberapa bahasa lainnya seperti Python dan Java dengan traditional thread-based models.
+heroImg: https://brittanyellich.com/gophercon-2022/featured-image.jpeg
+imgSource: https://brittanyellich.com/gophercon-2022
+author: content/authors/natserract.md
+date: 2024-05-20T16:00:00.000Z
+---
+
+[Go](https://go.dev/) merupakan bahasa pemrogaman yang banyak digunakan saat ini karena dikenal dengan fitur utamanya sebagai _first class citizen_ untuk concurrency problems. Go menggunakan pendekatan concurrency yang cukup berbeda dari beberapa bahasa lainnya seperti Python dan Java dengan [traditional thread-based models](https://medium.com/@rajputgajanan50/threading-in-python-9e46f2412994).
+
+Instead menggunakan [shared memory antar threads](https://marabos.nl/atomics/basics.html), Go menggunakan [Channel](https://go.dev/tour/concurrency/2) untuk mengirim data dan berkomunikasi antar **Goroutines** lainnya. Setiap unit **Goroutines** bekerja secara independen, concurrent dan lightweight.
+
+**Goroutines** tidak menggunakan OS threads, melainkan [scheduler](https://meska54.hashnode.dev/concurrency-in-go-a-deeper-look-into-gos-runtime-scheduler) yang dihandle secara runtime (memory, swap, cpu, etc), sehingga kita dapat membuat sebanyak mungkin **Goroutines** tanpa mempengaruhi kinerja program secara efisien dengan minimal overhead.
+
+> **Go Scheduler**: The Go scheduler is responsible for managing the execution of Goroutines. The scheduler can distribute Goroutines across multiple OS threads, each of which can run on a separate CPU core. This means that your Goroutines can be executed in parallel, taking full advantage of the available CPU cores.
+
+Untuk itu di artikel ini akan membahas bagaimana **Goroutines** bekerja dan problems apa saja yang bisa kita temui. Let's get this bread!
+
+**Table of Contents:**
+
+1. Concurrency vs Parallelism
+2. Pengenalan Goroutines
+3. Pengenalan Channels
+4. Panic & Deadlock situations
+5. Error Handling
+6. Race Conditions Problem
+7. Waitgroup & Mutex (Synchronization Primitives)
+
+## Concurrency vs Parallelism
+
+> Most people do not understand clearly the difference between concurrent and parallel
+
+_Betul, termasuk saya awalnya juga bingung..._
+
+### Concurrency
+
+![Concurrency analogy](https://res.cloudinary.com/dqo6txtrv/image/upload/v1716100255/Natserract%20Blog/rdeqxt6ronldzcdelfbc.jpg)
+
+> Analogi: 1 orang mampu menangani pekerjaan sekaligus (multi-tasking)
+
+Sederhana-nya, **Concurrency** merupakan sebuah kemampuan sistem dalam **menangani banyak pekerjaan sekaligus dan berjalan secara independen**, tetapi _proses eksekusinya dilakukan dalam satu waktu (overlapping)_.
+
+Artinya pekerjaan-pekerjaan tersebut dilakukan secara bersamaan oleh 1 orang (single-core processor). Dimana 1 orang ini merupakan orang yang multi-tasking, dia bisa menjalankan banyak pekerjaan sekaligus. Entah pekerjaan pertama dikerjaan setengah dahulu, terus lanjut ke pekerjaan lain, atau pekerjaan kedua dikerjakan dahulu lalu lanjut ke pekerjaan pertama.
+
+Technically, ini disebut [context switching](https://www.linfo.org/context_switch.html).
+
+#### Context Switching
+
+Fyi, ketika goroutine dibuat, runtime go (scheduler) akan mengalokasikan beberapa thread OS kecil yang digunakan untuk mengeksekusi satu goroutine. Jika goroutine tersebut diblokir(e.g: mutex, channel), maka go scheduler melakukan context switching ke goroutine lain yang akan dieksekusi pada thread tersebut.
+
+Sehingga setiap goroutine yang diblokir akan dihapus dari thread, dan goroutine lain dijadwalkan untuk dieksekusi. Ini alasan mengapa Goroutines disebut cheap.
+
+> Read: https://blog.nindalf.com/posts/how-goroutines-work/
+
+### Parallelism
+
+![Parallelism analogy](https://res.cloudinary.com/dqo6txtrv/image/upload/v1716100255/Natserract%20Blog/ljlzerlhmekcu0hxi1z9.jpg)
+
+> Analogi: banyak orang melakukan banyak pekerjaan sekaligus
+
+Sederhana-nya, **Parallelism** merupakan sebuah mekanisme pelaksanaan banyak pekerjaan yang dilakukan oleh banyak orang secara bersamaan (gotong-royong).
+
+Artinya pekerjaan-pekerjaan tersebut akan dipecah menjadi sub-bagian terkecil lalu ditugaskan kepada setiap orang, masing2 orang bertanggung jawab atas pekerjaannya (multi-core processor). Sehingga hasil yang di dapat bisa mempercepat waktu pekerjaan.
+
+**In simple terms**:
+
+- **Concurrency**: menangani banyak hal sekaligus
+- **Parallelism**: melakukan banyak hal sekaligus
+
+## Pengenalan Goroutines
+
+Go secara built-in di-desain untuk concurrency programming. Jadi, kita bisa dengan mudah menjalankan concurrent process hanya dengan memanggil statement `go`:
+
+```go
+go func() {
+  ...
+}()
+```
+
+Dengan goroutine, proses eksekusi dapat dijalankan secara **asynchronous** atau **non-blocking** sehingga tidak perlu menunggu proses lainnya selesai.
+
+### Goroutines Behaviour
+
+Di golang, setidaknya ada 1 goroutine yang aktif yaitu **main goroutine** pada `main` function.
+
+```go
+func main() {
+	go func() {
+		time.Sleep(5 * time.Second) // 5 seconds
+		fmt.Println("Goroutine started")
+	}()
+
+	fmt.Println("Main executed")
+}
+```
+
+Output yang dihasilkan:
+
+```sh
+Main executed
+```
+
+Terlihat output diatas hanya `Main executed` saja yang muncul, `main` function melanjutkan eksekusi `fmt.Println("Main executed")` tanpa menunggu goroutine process selesai. Padahal jika dilihat inside go routine terdapat function [delay](https://pkg.go.dev/time#Sleep) selama 5 detik, sedangkan `"Main executed"` muncul sebelum 5 detik.
+
+Walaupun output `"Goroutine started"` tidak muncul, secara tidak langsung Goroutine akan dialokasi ke [heap memory](https://medium.com/@quicktechlearn/stack-and-heap-memory-in-golang-eec3fb7ec113) dan berjalan di background, kemudian akan release setelah eksekusi _5 detik_ selesai.
+
+Mungkin disini ada pertanyaan,
+
+1. **Bagaimana melanjutkan eksekusi hanya jika setelah proses goroutine selesai**
+2. **Bagaimana mendapatkan sebuah nilai result dari goroutine function**
+
+Faktanya, di goroutine kita tidak bisa melakukan seperti ini:
+
+```go
+func work() bool{
+    return true
+}
+
+v := go work() // Nope
+```
+
+> Goroutine tidak mengembalikan nilai!
+
+### Synchronizations
+
+Synchronizations is the answer!
+
+Karena goroutine berjalan secara concurrent dan independen, tidak ada urutan implisit di antara operasi yang mereka jalankan. Bisa jadi task-B selesai, tanpa harus menunggu task-A selesai atau sebaliknya. Maka dari itu kita butuh **Synchronizations**!
+
+**Synchronizations** merupakan cara mengkoordinasikan beberapa proses (goroutine) untuk memastikan akses mereka menjadi teratur(sinkron)
+
+The problems:
+
+```go
+var sum = 0
+go func() {
+	time.Sleep(2 * time.Second) // 2 seconds
+	sum++
+	fmt.Println("Operations 1, done!")
+}()
+
+go func() {
+	time.Sleep(3 * time.Second) // 3 seconds
+	sum++
+	fmt.Println("Operations 2, done!")
+}()
+
+fmt.Println("Result: ", sum)
+```
+
+Output:
+
+```sh
+Result:  0
+```
+
+Case diatas terdapat 2 goroutine, setiap operasi goroutine akan melakukan increment plus one. Tapi, hasil yang didapat selalu `0`, sedangkan ekspetasi nilai `sum` seharusnya adalah `2`.
+
+Golang sendiri secara primitive sudah menyediakan beberapa cara untuk melakukan Synchronization, bisa menggunakan **Channel**, dan cara lainnya yang cukup simple bisa menggunakan [**sync standard package**](https://golang.org/pkg/sync).
+
+> Kita bahas Channel di section selanjutnya, kita akan mulai dengan `sync`
+
+#### sync WaitGroup
+
+[`sync.WaitGroup`](https://golang.org/pkg/sync/#WaitGroup) merupakan mekanisme synchronizations di go yang digunakan untuk menunggu eksekusi koleksi goroutines hingga selesai. `*WaitGroup` pada dasarnya terdiri dari 3 methods:
+
+1. `Add(delta int)`: jumlah goroutines yang ingin ditunggu (sinkronkan),
+2. `Done()`: sebagai trigger untuk menandakan proses goroutine (n) selesai,
+3. `Wait()`: sebagai blocking untuk operasi selanjutnya, ini akan menunggu semua proses goroutines yang didaftarkan tadi selesai `Done()`
+
+Umumnya, nilai `WaitGroup` digunakan untuk skenario di mana satu goroutine menunggu (main) hingga semua goroutine lain menyelesaikan pekerjaannya masing-masing.
+
+```go
+var (
+	wg sync.WaitGroup
+	sum = 0
+)
+
+wg.Add(1)
+go func() {
+	defer wg.Done()
+
+	time.Sleep(2 * time.Second) // 2 seconds
+	sum++
+	fmt.Println("Operations 1, done!")
+}()
+
+wg.Add(1)
+go func() {
+	defer wg.Done()
+
+	time.Sleep(3 * time.Second) // 3 seconds
+	sum++
+	fmt.Println("Operations 2, done!")
+}()
+
+wg.Wait()
+fmt.Println("Result: ", sum)
+```
+
+Output:
+
+```sh
+Operations 1, done!
+Operations 2, done!
+Result:  2
+```
+
+Pada case diatas, kita ingin menunggu 2 goroutines selesai secara sinkron dengan membuat **2 panggilan `wg.Add(1)`**. Setiap goroutine saat proses eksekusi-nya selesai akan call `wg.Done()`. Kemudian output `Result: ` baru akan muncul sampai semua proses 2 goroutines tadi selesai.
+
+Simplenya, ini sebenernya seperti counter. Ketika `wg.Add` dipanggil maka nilai wait-group akan selalu ditambah, dan ketika `wg.Done` dipanggil nilai wait-group akan selalu dikurangi sampai menjadi 0. Kemudian `wg.Wait()` akan melanjutkan eksekusi ke operasi selanjutnya.
+
+## Pengenalan Channels
+
+Ini salah satu bagian yang menarik di Go, jadi saya akan mulai dengan [mantra terkenal Golang](https://www.youtube.com/watch?v=oV9rvDllKEg):
+
+> **Don't communicate by sharing memory; share memory by communicating!**
+
+Saya pikir ini bukan sekedar _mantra_, tapi juga sebuah **prinsip**.
+Pendekatan concurrency di go menggunakan Channel **untuk saling berbagi memori (values) sebagai cara untuk berkomunikasi**.
+
+**Purposes of Channel: Synchronization dan Communication**. Secara logika ini seperti hubungan sebuah entitas antara producer dan consumer untuk saling berbagi values. Producer sebagai penghasil nilai, consumer sebagai penerima nilai.
+
+### Channel Pipelines
+
+Channel generally terdapat 2 operations: `sender` dan `receiver`
+
+#### 1. First, allocates the channel
+
+```go
+make(chan T)
+```
+
+#### 2. Wait to senders ready (spawn)
+
+Proses **pengiriman data** `ch <- val` ke channel akan diblokir sampai `receiver` ready
+
+```go
+go func(ch T) {
+	ch <- val
+}(ch)
+```
+
+#### 3. Wait to receivers ready
+
+Proses **penerimaan data** dari channel akan diblokir sampai `sender` ready
+
+```go
+<-ch
+```
+
+#### 4. Closing
+
+Close channel artinya tidak ada lagi data yang akan dikirim ke channel. Channel yang sudah di close tidak dapat **mengirim** data, tetapi masih bisa **menerima**.
+
+```go
+close(ch)
+```
+
+(Hint: **set value** → **send to channel** → **receive from channel** -> **close**)
+
+### Channel Behaviours
+
+#### Type Safety
+
+Channel secara explicit didefine dengan tipe data `T`. Ini untuk memastikan agar `sender` dan `receiver` mengirim/menerima data yang valid dan konsisten. Thanks [generics](https://go.dev/blog/intro-generics)!
+
+#### Blocking
+
+Kalau di bagian sebelumnya kita menggunakan `wg.Done()` untuk memberikan signal bahwa proses goroutine telah selesai dieksekusi, lalu `wg.Wait()` untuk block eksekusi sampai semua goroutines telah selesai. Channel(unbuffered) secara default melakukan synchronizations dengan memblokir operasi tertentu dan memberikan signal bahwa proses telah selesai.
+
+Untuk itu, perhatikan kode dibawah ini untuk mengetahui bagaimana blocking bekerja:
+
+```go
+ch := make(chan bool)
+// Producer
+go func() {
+	ch <- true // Sender ready
+}()
+
+// Another operations
+fmt.Println("Prepare") // Not blocked
+
+// Consumer
+time.Sleep(2 * time.Second) // Time processed in 2 seconds
+fmt.Println("Result: ", <-ch) // Receiver ready
+
+// Another operations
+fmt.Println("All Executions finished!") // Blocked until receiver ready
+```
+
+Output:
+
+```sh
+Prepare
+Result: true
+All Executions finished!
+```
+
+Terlihat output `Prepare` muncul sebelum `receiver` ready menerima value, dan `All Executions finished!` muncul setelah `receiver` ready. Artinya receiver kalau belum ready (belum dipanggil) proses eksekusi operasi lainnya akan diblock sampai receiver ready. Begitupun sebaliknya, ketika sender belum ready untuk mengirim value, walaupun receiver sudah ready (sudah dipanggil) ini juga akan membuat blocking ke operasi lainnya.
+
+Perhatikan jika sender belum ready, _outputnya akan kosong dan program stuck (deadlocks)_!
+
+```go
+...
+go func() {
+	// ch <- true
+}()
+...
+```
+
+Channel berkomunikasi dengan membagi data dengan cara yang lebih safe dan predictable. Channel memberikan flexibility dan cara yang lebih expressive untuk synchronization, tapi bukan berarti harus pakai channel untuk semua usecase, kita bisa combine [mutexes](https://pkg.go.dev/sync#Mutex) dan [wait-groups](https://golang.org/pkg/sync/#WaitGroup) untuk use case yang lebih kompleks nantinya.
+
+> A common Go newbie mistake is to over-use channels and goroutines just because it’s possible, and/or because it’s fun.
+
+#### Goroutine Executions
+
+Untuk memulai `sender`, kita perlu membuatnya dalam goroutine seperti contoh diatas. Tapi disini saya cukup penasaran, bagaimana jika saya buat `sender` diluar goroutine seperti ini:
+
+```go
+func main() {
+	ch := make(chan bool)
+	ch <- true // Nope
+}
+```
+
+_Outputnya kosong, program stuck(deadlocks)_! Mengapa ini terjadi?
+
+- Iya pertama, seperti yang sudah di-mention sebelumnya. Di golang **at least setidaknya ada 1 goroutine yang aktif yaitu main goroutine** pada main function. Jadi karena channel ini sifatnya **blocking**, terus `sender` _dijalankan langsung menggunakan main routine_ maka ini menyebabkan **main routine** _nge-block secara keseluruhan_.
+- Kedua karena jalur komunikasi channel dibuat unbuffered (**blocking**). Jadi kita bisa ubah menjadi bufferred (**non-blocking**) dengan main routine.
+
+```go
+func main() {
+	ch := make(chan bool, 1)
+	ch <- true // Ok
+}
+
+```
+
+### Channel Bufferred vs Unbuffered
+
+Go channel menyediakan 2 mekanisme komunikasi channel yaitu **unbuffered** dan **buffered**
+
+1. **Unbuffered channel**: `make(chan T)` -> synchronous (default)
+2. **Buffered channel**: `make(chan T, size)` -> asynchronous, synchronous
+
+#### Unbuffered channel (Default)
+
+By default channel itu no buffer size, nilainya 0 `make(chan T, 0)`. Komunikasinya bersifat blocking, ketika sebuah nilai dikirim pada unbufferred channel, `sender` akan memblokir sampai ada `receiver` siap menerima data, begitupun juga sebaliknya.
+
+```go
+replyChan := make(chan int)
+
+go func() {
+	for i := 0; i < 5; i++ {
+		replyChan <- i
+		fmt.Println("Placed: ", i)
+	}
+
+	close(replyChan)
+}()
+
+for n := range replyChan {
+	fmt.Println("Preparing ", n)
+	time.Sleep(2 * time.Second) // Time processed
+	fmt.Println("Served ", n)
+	fmt.Println("")
+}
+```
+
+Output:
+
+```sh
+Placed:  0
+Preparing  0
+Served  0
+
+Preparing  1
+Placed:  1
+Served  1
+
+Preparing  2
+Placed:  2
+Served  2
+
+Preparing  3
+Placed:  3
+Served  3
+
+Preparing  4
+Placed:  4
+Served  4
+```
+
+Scenario diatas, anggap saja terdapat 5 antrian takeaway order. Pekerjaannya meliputi: `Placed`, `Preparing` dan `Served`. Masing-masing dihandle secara sequential, ketika 1 pesanan datang, disaat itu juga langsung di proses, kemudian ketika selesai langsung di serve ke pelanggan. Secara logika ini seperti **queue task**.
+
+#### Buffered channel
+
+Buffered channel sifatnya aga unik. Mereka akan non-blocking/asynchronous selama buffer size-nya belum full. Dan akan menjadi blocking/synchronous ketika buffer size-nya full (kembali ke sifat aslinya).
+
+Perlu digaris bawahi buffer size disini adalah capacity berapa kali `sender` tersebut mengirim value. Jika capacity dari buffer tersebut hanya `2`, maka proses `sender` mendapat limit `3` kali untuk menjalankan proses asynchronous dimulai dari `0 -> 1 -> 2`. Selama buffer size nya belum sampai `2`, `sender` tidak perlu menunggu `receiver` untuk ready.
+
+> Setiap panggilan `sender` akan menggunakan space pada buffer size menjadi `+1`, dan ketika panggilan `receiver` akan memberikan space pada buffer size menjadi `-1` sampai buffer size menjadi `0` (kosong).
+
+```go
+replyChan := make(chan int, 2)
+
+go func() {
+	for i := 0; i < 5; i++ {
+		replyChan <- i
+		fmt.Println("Placed: ", i)
+	}
+
+	close(replyChan)
+}()
+
+for n := range replyChan {
+	fmt.Println("Preparing ", n)
+	time.Sleep(2 * time.Second)
+	fmt.Println("Served ", n, "-", "Buffer size ", len(replyChan))
+	fmt.Println("")
+}
+```
+
+Output:
+
+```sh
+Placed:  0
+Placed:  1
+Placed:  2
+Preparing  0
+Served  0 - Buffer size  2
+
+Preparing  1
+Placed:  3
+Served  1 - Buffer size  2
+
+Preparing  2
+Placed:  4
+Served  2 - Buffer size  2
+
+Preparing  3
+Served  3 - Buffer size  1
+
+Preparing  4
+Served  4 - Buffer size  0
+```
+
+Scenario diatas, anggap saja terdapat 5 antrian takeway order. Bedanya, sekali order mampu menampung 3 pesanan sekaligus. Ketika pesanan ke 3 selesai, maka lanjut ke pesanan 4 dan 5 sekaligus. Secara logika ini seperti **batch queues task**.
+
+### Channel Directions
+
+Channel secara default adalah [bidirectional](https://go.dev/ref/spec#Channel_types) `ch := make(chan int)`. Komunikasi berjalan **dua arah**, siapapun(goroutines) dapat mengirim (write) dan menerima values (read). Sifat dua arah ini dapat menyebabkan situasi di mana beberapa goroutine mengirim(write) dan menerima(read) value ke channel yang sama secara bersamaan.
+
+Ini bisa menyebabkan issue seiring dengan makin tinggi-nya kompleksitas sistem yang dibuat, ditambah lagi ini merupakan concurrent. Beberapa issue diantaranya seperti: [deadlocks](https://www.baeldung.com/cs/os-deadlock), unpredictable executions, data flow yang tidak jelas dan berbagai masalah lainnya yang menyebabkan _bug sulit di trace_. Untuk itu perlunya kehati-hatian dan pemahaman yang baik dalam menulis concurrent program
+
+> Deadlocks(The Silent Menace): can be subtle and challenging to debug, especially in complex concurrent systems.
+
+Dengan problem diatas, Go memberikan cara yang lebih safe yaitu **unidirectional/single-directional (satu arah)** artinya kita bisa memilih mau _send only_ atau _receive only_.
+
+1. `chan T`: Komunikasi dua arah (bidirectional), diizinkan untuk **mengirim dan menerima value**
+2. `chan<- T`: Komunikasi satu arah (unidirectional), hanya diizinkan untuk **mengirim value saja**
+3. `<-chan T`: Komunikasi satu arah (unidirectional), hanya diizinkan untuk **menerima value saja**
+
+#### **The problem**
+
+Usecase, anggap saja ingin buat sistem git sederhana. Goalsnya, nanti terdapat `owner` sebagai pemilik repository, kemudian `contributor` yang ingin kontribusi ke repository tersebut melalui pull-request.
+
+**Happy flow: Contributor pull request -> Owner merge ke master**
+
+```go
+var wg sync.WaitGroup
+var (
+	mergeCh       = make(chan *git.Merge)
+	pullRequestCh = make(chan *git.PullRequest)
+)
+
+func mergeByOwner(wg *sync.WaitGroup, m chan *git.Merge, p chan *git.PullRequest) {
+	defer wg.Done()
+
+	// Check PR
+	time.Sleep(2 * time.Second) // time processed
+	pr := <-p
+	if pr.Actor != "" {
+		fmt.Println("PR from: ", pr.Actor, " processed")
+
+		// Merge to the master
+		time.Sleep(2 * time.Second) // time processed
+		m <- &git.Merge{
+			To: &git.Branch{
+				Name:     "Master",
+				IsMaster: true,
+			},
+			From:     &pr.Branch,
+			Approved: true,
+		}
+
+		fmt.Println("PR merged from: ", pr.Branch.Name, "to: Master ")
+	}
+}
+
+func pullRequest(wg *sync.WaitGroup, m chan *git.Merge, p chan *git.PullRequest) {
+	defer wg.Done()
+
+	// Create pull request
+	//
+	// Any PR will requested to owner
+	fmt.Println("PR requested")
+	p <- &git.PullRequest{
+		Actor: "Contributor",
+		Branch: git.Branch{
+			Name: "Feature",
+		},
+	}
+
+	// Forced to merge to the master branch :(
+	m <- &git.Merge{
+		To: &git.Branch{
+			Name:     "Master",
+			IsMaster: true,
+		},
+		From: &git.Branch{
+			Name: "Feature",
+		},
+		Approved: true,
+	}
+
+	// Check merged request has been merged
+	merged := <-m
+	if merged.Approved {
+		fmt.Println("PR succesfully merged")
+	}
+}
+
+// Start 2 goroutines
+wg.Add(2)
+go pullRequest(&wg, mergeCh, pullRequestCh)
+go mergeByOwner(&wg, mergeCh, pullRequestCh)
+
+wg.Wait()
+close(mergeCh)
+close(pullRequestCh)
+```
+
+Output:
+
+```bash
+PR requested
+PR from:  Contributor  processed
+```
+
+_Program stuck (deadlocks)_, Mengapa ini terjadi?
+
+Secara logika, seharusnya **hanya owner yang bisa melakukan merge ke master branch**. Ini terjadi karena _penulis kode_ kurang teliti. Dia menggunakan data flow secara 2 arah, akibatnya contributor tiba2 melakukan merge ke master.
+
+**Talk is cheap. Show me the problems!**
+
+```go
+func pullRequest(wg *sync.WaitGroup, m chan *git.Merge, p chan *git.PullRequest) {
+...
+	m <- &git.Merge{
+		To: &git.Branch{
+			Name:     "Master",
+			IsMaster: true,
+		},
+		From: &git.Branch{
+			Name: "Feature",
+		},
+		Approved: true,
+	}
+}
+```
+
+```go
+func mergeByOwner(wg *sync.WaitGroup, m chan *git.Merge, p chan *git.PullRequest) {
+...
+	m <- &git.Merge{
+		To: &git.Branch{
+			Name:     "Master",
+			IsMaster: true,
+		},
+		From:     &pr.Branch,
+		Approved: true,
+	}
+...
+}
+```
+
+Kalau dilihat outputnya, program stuck(deadlocks) saat `PR from:  Contributor  processed`. Indikasinya berarti ada bagian yang saling blocking alias sama2 nunggu. Faktanya, pada fungsi `pullRequest` dan `mergeByOwner` terjadi proses dimana mereka ingin mengirim/menulis value secara bersamaan.
+
+Masalah ini terjadi, pada kedua fungsi tersebut menggunakan channel dua arah (**bidirectional**)
+
+```go
+m chan *git.Merge, p chan *git.PullRequest
+```
+
+Maka dari itu, kita perlu ubah komunikasi channel tersebut menjadi satu arah (**unidirectional**)
+
+Contributor (`m` read only, `p` write only):
+
+```go
+func (g *Git) pullRequest(wg *sync.WaitGroup, m <-chan *Merge, p chan<- *PullRequest) {
+...
+}
+```
+
+Owner (`m` send only, `p` read only):
+
+```go
+func (g *Git) mergeByOwner(wg *sync.WaitGroup, m chan<- *Merge, p <-chan *PullRequest) {
+...
+}
+```
+
+Uups, terjadi kesalahan!
+
+```sh
+invalid operation: cannot send to receive-only channel m (variable of type <-chan *git.Merge)
+```
+
+Selamat! _Error menjadi sebuah jawaban_. Itu artinya, `mergeByOwner` tidak diizinkan untuk merge branch ke master, yang boleh hanya owner. Jadi sekarang penulis kode sudah fixing code tersebut di production :)
+
+Dengan unidirectional channel, data flow bisa menjadi lebih jelas dan predictable sehingga lebih mudah untuk dipahami.
+
+## Panic & Deadlock Situations
+
+Ketika berbicara concurrency [deadlock](https://en.wikipedia.org/wiki/Deadlock) merupakan masalah yang cukup umum terjadi. Pada golang, deadlock terjadi ketika semua goroutine yang saling memblokir satu sama lain, akibatnya program stuck, dan tidak ada operasi yang dilanjutkan. Ini persis seperti problems yang kita alami di bagian sebelumnya.
+
+Untuk itu, penting memahami situasi deadlock dan bagaimana solusinya:
+
+### Nil/empty channel
+
+```go
+valChan := make(chan int)
+
+// Do nothing spawned goroutine
+go func() {
+	// valChan <- 1 (SOLUTIONS!)
+}()
+
+fmt.Println("DEADLOCK 1", <-valChan)
+```
+
+Tidak ada value yang dikirim, sehingga receiver terus menunggu.
+
+```go
+valChan2 := make(chan int)
+go func() {
+	valChan2 <- 10
+	// valChan2 <- 11 (SOLUTIONS!)
+}()
+
+<-valChan2 // (OK)
+<-valChan2 // (Deadlock!)
+```
+
+Tidak ada value yang diterima, sehingga receiver terus menunggu dari sender ke-2.
+
+### Closed channel
+
+```go
+var wg sync.WaitGroup
+replyChan := make(chan int)
+
+wg.Add(1)
+go func(ch chan int) {
+	defer wg.Done()
+
+	ch <- 1
+	close(ch)
+}(replyChan)
+
+wg.Add(1)
+go func(ch chan int) {
+	defer wg.Done()
+
+	// Already closed, PANIC!
+	ch <- 2
+}(replyChan)
+
+go func() {
+	wg.Wait()
+}()
+
+<-replyChan
+<-replyChan
+```
+
+Value dikirim saat channel sudah di close pada goroutine ke 2
+
+Solusi:
+
+```go
+go func() {
+	wg.Wait()
+	close(ch)
+}()
+```
+
+Close channel saat semua goroutine selesai.
+
+### Miss komunikasi
+
+```go
+var wg sync.WaitGroup
+replyChan := make(chan int)
+
+wg.Add(1)
+go func(ch chan int) {
+	defer wg.Done()
+
+	ch <- 1
+}(replyChan)
+
+wg.Wait()
+<-replyChan // DEADLOCK!
+```
+
+`wg.Wait()` menunggu semua operasi goroutine selesai. Ketika sender sudah mengirim value, ternyata receiver masih ke blocking oleh `wg.Wait`.
+
+Solusi:
+
+```go
+...
+go func(){
+	wg.Wait()
+}()
+
+<-replyChan
+```
+
+Solusinya execute `wg.Wait` dalam goroutine sehingga goroutine lainnya (eg: main) bisa melanjutkan operasi. Dan goroutine diatas, akan handle `wg.Wait`.
+
+...
+
+_Selanjutnya, kamu akan mengalami sendiri dan hadapi ya! (Jangan ditinggal tidur_)
+
+## Error Handling
+
+Seperti yang kita tau, goroutine tidak mengembalikan value!
+
+Jadi ketika ada proses goroutine yang error, perlakuannya sedikit [berbeda](https://trstringer.com/concurrent-error-handling-go/). Bisa dilakukan menggunakan channel terpisah, ataupun by stored variables. Tetapi, Go sendiri menyediakan cara yang lebih praktis menggunakan [errgroup.Group](https://pkg.go.dev/golang.org/x/sync/errgroup), secara default [errgroup](https://pkg.go.dev/golang.org/x/sync/errgroup) sudah handle synchronization (tanpa perlu `sync.WaitGroup`), error propagation dan cancelation jadi ini sangat memudahkan.
+
+```go
+var eg errgroup.Group
+jobsChan := make(chan int)
+
+// Create new goroutine
+eg.Go(func() error {
+	jobsChan <- 10
+	return fmt.Errorf("Go to error") // Simulate the error
+})
+
+<-jobsChan
+close(jobsChan)
+
+// Waiting all goroutines done
+// If err will returned
+err := eg.Wait()
+if err != nil {
+	fmt.Println("Error", err)
+}
+```
+
+`eg.Go` cara kerjanya mirip dengan `wg.Add`. Bedanya, secara default itu akan launch goroutine, lalu masuk list ke daftar tunggu, dan akan selesai (`wg.Done` like) dengan sendirinya.
+
+`eg.Wait()` akan menunggu semua goroutine selesai, jika mengembalikan error, operasi akan dihentikan.
+
+## Race Conditions Problem
+
+Di bagian ini, kita akan coba sebuah permasalahan yang cukup umum juga selain deadlocks, yakni [race conditions](https://en.wikipedia.org/wiki/Race_condition). Race conditions pada golang merupakan suatu kondisi beberapa goroutines yang dijalankan secara bersamaan, **mengakses ataupun memodifikasi data yang sama**.
+
+Race conditions terjadi biasanya karena dari perlakuan proses executions itu sendiri. Karena seperti yang kita tau concurrent berjalan secara independen dan tidak berurutan. Jadi saat proses tersebut dijalankan, ada sumber data yang ingin diakses tetapi berdasarkan urutan eksekusi-nya.
+
+Casenya ingin **meng-akumulasi total order secara keseluruhan**:
+
+```go
+var wg sync.WaitGroup
+var jobsChan = make(chan int)
+
+var total = 0
+send := func(ch chan int) {
+	defer wg.Done()
+
+	for i := 0; i < 10; i++ {
+		ch <- i
+		total++ // Calculate here
+	}
+}
+
+receive := func() {
+	for range jobsChan {
+	}
+}
+
+// Launch 3 goroutines
+workers := 3
+for i := 0; i < workers; i++ {
+	wg.Add(1)
+	go send(jobsChan)
+}
+
+go func() {
+	wg.Wait()
+	close(jobsChan)
+}()
+
+receive()
+fmt.Println("total", total) // Output: Undetermined (Race condition)
+```
+
+Pada case diatas terdapat 3 goroutines. Ketika order selesai diproses, total order akan di akumulasikan menjadi 1 nilai total. Cuman output yang dihasilkan ambigu, kadang sesuai dan kadang tidak. Ini karena setiap goroutines tersebut berjalan secara random, jadi saat kalkulasi `total++` proses increment belum selesai tapi sudah lanjut ke proses goroutine lain. Akhirnya nilai total tidak sesuai, inilah yang disebut **race conditions**.
+
+> Once you encounter a shared resource in a concurrent software, you have to be careful while accessing this resource especially if you are writing to it.
+
+Untuk tau apakah code diatas menyebabkan race conditions atau tidak, di Go kita bisa debug dengan run `go run -race`
+
+Output:
+
+```sh
+WARNING: DATA RACE
+...
+total 28
+Found 2 data race(s)
+```
+
+Sebentar, bukannya `sync.WaitGroup` tadi untuk synchronizations? Menunggu sampai goroutines selesai? Betul, mekanisme tersebut melakukan synchronizations tetapi tidak membuat urutan eksekusi nya saling berurutan.
+
+> Since race conditions caused by concurrent manipulation of shared mutable data are disastrous bugs — hard to discover, hard to reproduce, hard to debug — we need a way for concurrent modules that share memory to synchronize with each other.
+
+Sebelum mengetahui bagaimana solusinya, kita perlu tahu dulu beberapa prinsip [thread safety](https://web.mit.edu/6.005/www/sp16/classes/20-thread-safety/#what_threadsafe_means):
+
+1. **Confinement**: Jangan saling berbagi memori antar threads, hanya ada satu thread yang mempunyai akses untuk memodifikasi.
+2. **Immutability**: Buat data yang digunakan bersama menjadi immutable. _You can only read the variable, not write it!_
+3. **Type safety**: Tipe data yang kuat, ketika ada kesalahan akan dicek saat kompilasi bukan saat runtime.
+4. **Synchronization (Locking)**: Mencegah thread mengakses data bersama secara bersamaan. Hanya ada satu thread dalam satu waktu. _“I’m changing this thing, don’t touch it right now.”_
+
+**Discipline needs to be written down, or maintainers won’t know what it is.**
+
+Untuk solve masalah diatas, kita perlu yang namanya [Mutual Exclusion (Mutex)](<https://en.wikipedia.org/wiki/Lock_(computer_science)>). Ini digunakan agar hanya ada satu goroutine yang dapat mengakses data dalam satu waktu, sehingga menghindari race conditions.
+
+## Waitgroup & Mutex (Synchronization Primitives)
+
+[`sync.WaitGroup`](https://pkg.go.dev/sync#WaitGroup) & [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) merupakan cara traditional synchronization untuk solve permasalahan race conditions. Keduanya diperlukan untuk tujuan berbeda tetapi saling berkaitan:
+
+1. [`sync.WaitGroup`](https://pkg.go.dev/sync#WaitGroup): digunakan untuk menunggu beberapa goroutines selesai
+2. [`sync.Mutex`](https://pkg.go.dev/sync#Mutex): digunakan didalam goroutine sebagai representasi status goroutine tersebut terkunci/tidak terkunci.
+
+Mekanisme ini akan membuat kunci yang dapat diakses oleh goroutine yang berbeda. Ketika ada sebuah goroutine mengakses bagian tertentu, ia akan mendapatkan kunci tersebut, dan selama kunci tersebut masih dipegang oleh sebuah goroutine, maka goroutine lain akan terhalang untuk mengakses bagian tersebut(acquire) dan menunggu sampai kunci tersebut dilepaskan(release).
+
+**Let's refactor**:
+
+```go
+var wg sync.WaitGroup
+var mu sync.Mutex
+
+...
+send := func(ch chan<- int) {
+	defer mu.Unlock()
+	defer wg.Done()
+
+	mu.Lock()
+	for i := 0; i < 10; i++ {
+		ch <- i
+		total++
+		fmt.Println("Calculated: ", total, " - ", "Sequence: ", i)
+	}
+}
+
+...
+```
+
+`go run -race main.go`:
+
+```sh
+Calculated:  1  -  Sequence:  0
+Calculated:  2  -  Sequence:  1
+Calculated:  3  -  Sequence:  2
+Calculated:  4  -  Sequence:  3
+Calculated:  5  -  Sequence:  4
+Calculated:  6  -  Sequence:  5
+Calculated:  7  -  Sequence:  6
+Calculated:  8  -  Sequence:  7
+Calculated:  9  -  Sequence:  8
+Calculated:  10  -  Sequence:  9
+Calculated:  11  -  Sequence:  0
+Calculated:  12  -  Sequence:  1
+Calculated:  13  -  Sequence:  2
+Calculated:  14  -  Sequence:  3
+Calculated:  15  -  Sequence:  4
+Calculated:  16  -  Sequence:  5
+Calculated:  17  -  Sequence:  6
+Calculated:  18  -  Sequence:  7
+Calculated:  19  -  Sequence:  8
+Calculated:  20  -  Sequence:  9
+Calculated:  21  -  Sequence:  0
+Calculated:  22  -  Sequence:  1
+Calculated:  23  -  Sequence:  2
+Calculated:  24  -  Sequence:  3
+Calculated:  25  -  Sequence:  4
+Calculated:  26  -  Sequence:  5
+Calculated:  27  -  Sequence:  6
+Calculated:  28  -  Sequence:  7
+Calculated:  29  -  Sequence:  8
+Calculated:  30  -  Sequence:  9
+total 30
+```
+
+See? 3 goroutines setiap eksekusi-nya berjalan berurutan. Ketika goroutine pertama berjalan, goroutine pertama akan dikunci `mu.Lock()`. Sementara goroutine lainnya akan menunggu sampai goroutine pertama selesai `mu.Unlock()` begitu juga seterusnya.
+
+## Conclusion
+
+Well, Go menawarkan pendekatan concurrency yang cukup unik menggunakan goroutine dan channel. Saya noticed, golang menggunakan pendekatan mirip dengan [Erlang](https://www.erlang.org/), keduanya menggunakan ["lightweight threads"](https://www.erlang.org/doc/getting_started/conc_prog#processes). Banyak konsep2 concurrency yang cukup rumit sebenernya, tapi di Go itu dibuat sesederhana mungkin, more fun to write dan ditambah lagi dukungan type system yang cukup oke.
+
+So far cukup happy! Untuk itu dengan adanya dukungan kemudahan tersebut penting untuk memahami konsep goroutine dan channel dalam berbagai kondisi, sehingga memastikan aplikasi Go yang kita buat bekerja secara aman, minim bugs, bahkan untuk sebuah concurrent system yang kompleks.
+
+..
+
+**Source code: https://github.com/natserract/a-tour-of-goroutines**
+
+## Additional Reading
+
+- Simplicity is complicated https://go.dev/talks/2015/simplicity-is-complicated.slide
+- Concurrency patterns https://github.com/lotusirous/go-concurrency-patterns/tree/main
+- Batch processing https://dev.to/ishankhare07/go-concurrency-pipelines-gmc
+- https://go101.org/article/concurrent-synchronization-more.html
