@@ -620,7 +620,7 @@ Uups, terjadi kesalahan!
 invalid operation: cannot send to receive-only channel m (variable of type <-chan *git.Merge)
 ```
 
-Selamat! _Error menjadi sebuah jawaban_. Itu artinya, `mergeByOwner` tidak diizinkan untuk merge branch ke master, yang boleh hanya owner. Jadi sekarang penulis kode sudah fixing code tersebut di production :)
+Selamat! _Error menjadi sebuah jawaban_. Itu artinya, contributor (`pullRequest`) tidak diizinkan untuk merge branch ke master, yang boleh hanya owner. Jadi sekarang penulis kode sudah fixing code tersebut di production :)
 
 Dengan unidirectional channel, data flow bisa menjadi lebih jelas dan predictable sehingga lebih mudah untuk dipahami.
 
