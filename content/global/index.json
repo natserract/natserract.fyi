@@ -5,16 +5,12 @@
       "color": "orange",
       "style": "float"
     },
-    "name": "Natserract.",
+    "name": "Natserract",
     "color": "default",
     "nav": [
       {
         "href": "posts",
-        "label": "Blog"
-      },
-      {
-        "href": "about",
-        "label": "About"
+        "label": "Main"
       },
       {
         "href": "projects",

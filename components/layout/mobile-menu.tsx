@@ -33,7 +33,7 @@ function ModalDialog(
   usePreventScroll();
 
   return (
-    <div className="fixed z-[100] top-[72px] left-0 right-0 bottom-0 bg-white flex items-center justify-center">
+    <div className="fixed z-[100] top-[97px] left-0 right-0 bottom-0 bg-white flex items-center justify-center">
       <FocusScope contain restoreFocus autoFocus>
         <nav
           className="m-auto flex flex-col items-center"
@@ -53,7 +53,7 @@ function ModalDialog(
                 <Link
                   key={item.href}
                   href={`/${item.href}`}
-                  className={`relative select-none text-xl inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 hover:underline py-8 px-4 ${
+                  className={`relative select-none text-xs inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 hover:underline py-8 px-4 ${
                     activeItem ? `` : `opacity-70`
                   }`}
                 >
@@ -78,7 +78,7 @@ export default function MobileMenu({ data }: { data: GlobalHeader }) {
   );
 
   return (
-    <div className="block sm:hidden">
+    <div className="block sm:hidden mr-6">
       <button
         aria-label="Mobile Menu"
         type="button"
