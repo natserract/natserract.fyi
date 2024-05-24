@@ -79,9 +79,8 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           <strong className="font-bold">Area of interest:</strong>
         </p>
         <p className="mb-2">
-          DX(developer experience), software architecture, programming lang,
-          remote working, Web Assembly, AI, WordPress, careers not job,
-          KISS(keep it simple silly), type system, FP, OO, much more.
+          DX(developer experience), Software Architecture, Programming Language,
+          Remote Working, much more.
         </p>
         <blockquote className="mt-5 bg-[#f8f9fa] p-2 border border-[#a2a9b1]">
           <em className="block">
