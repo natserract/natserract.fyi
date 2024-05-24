@@ -12,7 +12,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { Container } from "../util/container";
 import { Section } from "../util/section";
 import { useTheme } from "../layout";
 import format from "date-fns/format";
@@ -116,6 +115,12 @@ const components: Components<{
       <img src={props.url} alt={props.alt} />
     </span>
   ),
+  a: (props) => (
+    <a className="font-semibold underline text-sail-600 hover:text-blue-600 cursor-pointer">
+      {props.children}
+    </a>
+  ),
+  h4: (props) => <h4 className="text-[22px]">{props.children}</h4>,
 };
 
 export const Post = (props: PostType) => {
@@ -140,12 +145,27 @@ export const Post = (props: PostType) => {
     formattedDate = format(date, "MMM dd, yyyy");
   }
 
+  const handleBackToTop = () => {
+    try {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      // just a fallback for older browsers
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <Section className="flex-1">
-      <Container width="small" className={`flex-1 pt-10 pb-2`} size="medium">
+      <div
+        className={`flex-1 pb-2 mb-5 md:mb-8 border-b-0 md:border-b border-gray-250`}
+      >
         <h2
           data-tina-field={tinaField(props, "title")}
-          className={`w-full relative	mb-8 text-4xl md:text-6xl font-extrabold tracking-normal text-center leading-snug md:leading-[5rem]`}
+          className={`w-full font-eb-garamond relative text-2xl sm:text-4xl title-font font-extrabold tracking-normal leading-snug`}
         >
           <span
             className={`bg-clip-text text-transparent bg-gradient-to-r ${
@@ -155,80 +175,32 @@ export const Post = (props: PostType) => {
             {props.title}
           </span>
         </h2>
-        <div
-          data-tina-field={tinaField(props, "author")}
-          className="flex items-center justify-center mb-10"
-        >
-          {props.author && (
-            <>
-              <div className="flex-shrink-0 mr-4">
-                <img
-                  data-tina-field={tinaField(props.author, "avatar")}
-                  className="h-14 w-14 object-cover rounded-full shadow-sm"
-                  src={props.author.avatar}
-                  alt={props.author.name}
-                />
-              </div>
-              <p
-                data-tina-field={tinaField(props.author, "name")}
-                className="text-base font-medium text-gray-600 group-hover:text-gray-800 dark:text-gray-200 dark:group-hover:text-white"
-              >
-                {props.author.name}
-              </p>
-              <span className="font-bold text-gray-200 dark:text-gray-500 mx-2">
-                —
-              </span>
-            </>
-          )}
-          <p
-            data-tina-field={tinaField(props, "date")}
-            className="text-base text-gray-400 group-hover:text-gray-500 dark:text-gray-300 dark:group-hover:text-gray-150"
-          >
-            {formattedDate}
-          </p>
-        </div>
-      </Container>
-      {props.heroImg && (
-        <div className="px-4 pt-2 pb-2 sm:pb-8 mb-14 w-full">
-          <div
-            data-tina-field={tinaField(props, "heroImg")}
-            className="relative max-w-4xl lg:max-w-5xl mx-auto"
-          >
-            <img
-              src={props.heroImg}
-              className="absolute block w-full h-auto max-h-[550px] object-cover blur-xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
-              aria-hidden="true"
-            />
-            <img
-              src={props.heroImg}
-              alt={props.title}
-              className="relative z-10 block w-full h-auto max-h-[550px] object-cover opacity-100"
-            />
-          </div>
+      </div>
 
-          {props.imgSource && (
-            <a
-              href={props.imgSource}
-              target="_blank"
-              className="text-xs text-gray-400 block text-center underline pt-10"
-            >
-              {props.imgSource}
-            </a>
-          )}
-        </div>
-      )}
-      <Container
-        className={`flex-1 !pt-0 !pb-10 sm:!pb-24`}
-        width="small"
-        size="medium"
-      >
+      <div data-tina-field={tinaField(props, "author")}>
+        <p
+          data-tina-field={tinaField(props, "date")}
+          className="text-xs text-gray-400 whitespace-nowrap group-hover:text-gray-500 dark:text-gray-300 dark:group-hover:text-gray-150 pb-5"
+        >
+          Published: {formattedDate}
+        </p>
+      </div>
+
+      <div className={`flex-1 !pt-0 !pb-10 sm:!pb-24`}>
         <article
           data-tina-field={tinaField(props, "_body")}
-          className="prose dark:prose-dark prose-xl w-full max-w-none"
+          className="prose dark:prose-dark prose-md text-base prose-h2:font-eb-garamond prose-h3:font-eb-garamond prose-h4:font-eb-garamond w-full max-w-none"
         >
           <TinaMarkdown components={components} content={props._body} />
         </article>
-      </Container>
+
+        <button
+          className="mt-20 hover:underline text-xs"
+          onClick={handleBackToTop}
+        >
+          Back to Top
+        </button>
+      </div>
     </Section>
   );
 };
