@@ -336,7 +336,6 @@ func main() {
 	ch := make(chan bool, 1)
 	ch <- true // Ok
 }
-
 ```
 
 ### Channel Bufferred vs Unbuffered
@@ -640,7 +639,7 @@ go func() {
 	// valChan <- 1 (SOLUTIONS!)
 }()
 
-fmt.Println("DEADLOCK 1", <-valChan)
+<-valChan
 ```
 
 Tidak ada value yang dikirim, sehingga receiver terus menunggu.
