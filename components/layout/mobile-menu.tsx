@@ -33,7 +33,7 @@ function ModalDialog(
   usePreventScroll();
 
   return (
-    <div className="fixed z-[100] top-[97px] left-0 right-0 bottom-0 bg-white flex items-center justify-center">
+    <div className="fixed bg-wild-sand-50 z-[100] top-[83px] left-0 right-0 bottom-0 flex items-center justify-center">
       <FocusScope contain restoreFocus autoFocus>
         <nav
           className="m-auto flex flex-col items-center"

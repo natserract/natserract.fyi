@@ -35,7 +35,7 @@ export const Content = ({ data }: { data: PageBlocksContent }) => {
     <Section color={data.color}>
       <div
         style={{ maxWidth: "none" }}
-        className={`prose prose-md text-sm prose-h1:text-4xl md:prose-h1:border-b prose-h1:border-gray-250 md:prose-h1:pb-5 prose-h1:font-eb-garamond prose-h2:font-eb-garamond prose-a:break-words min-h-screen ${
+        className={`prose prose-md text-sm prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:border-b prose-h1:border-gray-250 prose-h1:pb-5 prose-h1:font-eb-garamond prose-h2:font-eb-garamond prose-a:break-words min-h-screen ${
           data.color === "primary" ? `prose-primary` : `dark:prose-dark`
         }`}
         data-tina-field={tinaField(data, "body")}

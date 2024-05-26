@@ -67,9 +67,9 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
   return (
     <div
-      className={`relative overflow-hidden h-full bg-white md:bg-transparent border-b md:border-b-0 border-sail-200`}
+      className={`relative overflow-hidden h-full border-b md:border-b-0 border-sail-200`}
     >
-      <div className="relative z-10 w-full px-0 py-3 md:py-0 md:h-[100vh]">
+      <div className="relative z-10 w-full px-0 py-1 md:py-0 md:h-[100vh]">
         <div className="flex md:flex-col items-center justify-between md:items-start md:justify-normal gap-6">
           <h4 className="select-none text-3xl text-gray-800 font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
             <Link

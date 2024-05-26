@@ -167,7 +167,7 @@ export const Post = (props: PostType) => {
       >
         <h2
           data-tina-field={tinaField(props, "title")}
-          className={`w-full font-eb-garamond relative text-2xl sm:text-4xl title-font font-extrabold tracking-normal leading-snug`}
+          className={`w-full font-eb-garamond relative text-4xl title-font font-extrabold tracking-normal leading-snug`}
         >
           <span
             className={`bg-clip-text text-transparent bg-gradient-to-r ${

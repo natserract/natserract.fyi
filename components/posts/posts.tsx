@@ -40,7 +40,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
   return (
     <div className="">
       <div className="mb-7 text-sm font-lato">
-        <h3 className="text-2xl font-bold mb-2 md:mb-5 border-b-0 md:border-b border-gray-250 font-eb-garamond">
+        <h3 className="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond">
           About
         </h3>
         <Image
