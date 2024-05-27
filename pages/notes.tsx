@@ -1,8 +1,9 @@
-import { Layout } from "../components/layout";
+import { InferGetStaticPropsType } from "next";
+
 import { Section } from "../components/util/section";
 import { client } from "../tina/__generated__/client";
-import { InferGetStaticPropsType } from "next";
 import { Notes } from "../components/notes";
+import { Layout } from "../components/layout";
 
 export default function NotesPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,

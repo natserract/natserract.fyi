@@ -23,7 +23,12 @@ query pageQuery {
         edges {
             node {
                 id
+                date
                 title
+
+                _sys {
+                    filename
+                }
             }
         }
     }

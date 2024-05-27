@@ -27,7 +27,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
     yellow: "group-hover:text-yellow-500 dark:group-hover:text-yellow-300",
   };
 
-  const sortedDateByDate = React.useMemo(() => {
+  const sortedPostsByDate = React.useMemo(() => {
     return data.slice().sort((a, b) => {
       const [left, right] = [
         new Date(a.node.date).getTime(),
@@ -131,7 +131,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           All Posts
         </h3>
         <ul className="list-disc ml-5">
-          {sortedDateByDate.map((postData, i) => {
+          {sortedPostsByDate.map((postData, i) => {
             const post = postData.node;
             const date = new Date(post.date);
             let formattedDate = "";
