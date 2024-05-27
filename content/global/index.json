@@ -13,6 +13,10 @@
         "label": "Main"
       },
       {
+        "href": "notes",
+        "label": "Notes"
+      },
+      {
         "href": "projects",
         "label": "Projects"
       },
