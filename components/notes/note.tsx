@@ -6,6 +6,7 @@ import { Section } from "../util/section";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Prism } from "tinacms/dist/rich-text/prism";
 import type { TinaMarkdownContent, Components } from "tinacms/dist/rich-text";
+import Link from "next/link";
 
 const components: Components<any> = {
   code_block: (props) => <Prism {...props} />,
@@ -67,12 +68,15 @@ export const Note = (props: NoteType) => {
           <TinaMarkdown components={components} content={props._body} />
         </article>
 
-        <button
-          className="mt-20 hover:underline text-xs"
-          onClick={handleBackToTop}
-        >
-          Back to Top
-        </button>
+        <div className="flex flex-row items-center gap-2 mt-20">
+          <button className="hover:underline text-xs" onClick={handleBackToTop}>
+            Back to Top
+          </button>
+          <span className="block text-gray-400 text-xs">/</span>
+          <Link href="/notes" className="hover:underline text-xs">
+            Notes
+          </Link>
+        </div>
       </div>
     </Section>
   );

@@ -43,12 +43,11 @@ export const Content = ({ data }: { data: PageBlocksContent }) => {
         <TinaMarkdown components={components} content={data.body} />
       </div>
 
-      <button
-        className="mt-20 hover:underline text-xs"
-        onClick={handleBackToTop}
-      >
-        Back to Top
-      </button>
+      <div className="flex flex-row items-center gap-2 mt-20">
+        <button className="hover:underline text-xs" onClick={handleBackToTop}>
+          Back to Top
+        </button>
+      </div>
     </Section>
   );
 };

@@ -20,6 +20,7 @@ import { Prism } from "tinacms/dist/rich-text/prism";
 import type { TinaMarkdownContent, Components } from "tinacms/dist/rich-text";
 import { PostType } from "../../pages/posts/[filename]";
 import { tinaField } from "tinacms/dist/react";
+import Link from "next/link";
 
 const components: Components<{
   BlockQuote: {
@@ -196,12 +197,15 @@ export const Post = (props: PostType) => {
           <TinaMarkdown components={components} content={props._body} />
         </article>
 
-        <button
-          className="mt-20 hover:underline text-xs"
-          onClick={handleBackToTop}
-        >
-          Back to Top
-        </button>
+        <div className="flex flex-row items-center gap-2 mt-20">
+          <button className="hover:underline text-xs" onClick={handleBackToTop}>
+            Back to Top
+          </button>
+          <span className="block text-gray-400 text-xs">/</span>
+          <Link href="/posts" className="hover:underline text-xs">
+            Posts
+          </Link>
+        </div>
       </div>
     </Section>
   );
