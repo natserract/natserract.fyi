@@ -23,20 +23,16 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
         inputValue: searchDebounced,
       });
 
-      return options;
+      return options as NotesType[];
     }
 
     return data;
   }, [searchDebounced, data]);
 
-  const sortedNotesByDate = useMemo(() => {
-    return notes.slice().sort((a, b) => {
-      const [left, right] = [
-        new Date(a.node.date).getTime(),
-        new Date(b.node.date).getTime(),
-      ];
-      return right - left;
-    });
+  const sortedNotesByAlphabet = useMemo(() => {
+    return notes
+      .slice()
+      .sort((a, b) => a.node?.title.localeCompare(b.node?.title));
   }, [notes]);
 
   return (
@@ -56,7 +52,7 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
         </div>
 
         <Virtuoso
-          data={sortedNotesByDate}
+          data={sortedNotesByAlphabet}
           className="min-h-screen"
           components={{
             List: forwardRef((props, ref) => {
