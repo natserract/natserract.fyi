@@ -7,7 +7,7 @@ date: 2024-05-27T16:00:00.000Z
 
 ### Mutex Concept
 
-There are some great answers here, here is another great analogy for explaining what mutex is: 
+There are some great answers here, here is another great analogy for explaining what mutex is:
 
 Consider single toilet with a key. When someone enters, they take the key and the toilet is occupied. If someone else needs to use the toilet, they need to wait in a queue. When the person in the toilet is done, they pass the key to the next person in queue. Make sense, right?
 
@@ -16,6 +16,9 @@ Convert the toilet in the story to a shared resource, and the key to a mutex. Ta
 ### Mutex prevent race conditions
 
 A race condition occurs when two or more threads can access shared data and they try to change it at the same time. Because the thread scheduling algorithm can swap between threads at any time, you don't know the order in which the threads will attempt to access the shared data. Therefore, the result of the change in data is dependent on the thread scheduling algorithm, i.e. both threads are "racing" to access/change the data.
+
+### Mutex Tools (NodeJS)
+- https://github.com/DirtyHairy/async-mutex
 
 ### Additional Reading:
 
