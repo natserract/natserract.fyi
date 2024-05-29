@@ -42,7 +42,7 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
         <div className="mb-5">
           <input
             type="search"
-            placeholder="Search"
+            placeholder="Search (by title, keywords)"
             className="border border-gray-400 w-full p-2"
             onChange={(e) => handleSearch(e.target.value)}
           />

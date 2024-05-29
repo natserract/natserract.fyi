@@ -25,6 +25,7 @@ query pageQuery {
                 id
                 date
                 title
+                keywords
 
                 _sys {
                     filename

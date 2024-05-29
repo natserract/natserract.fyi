@@ -13,7 +13,7 @@ export const filterOptions = (config = {}) => {
     trim = false,
   } = config as FilterConfig;
 
-  return (options: any[], { inputValue }: { inputValue: string }) => {
+  return <Value>(options: Value[], { inputValue }: { inputValue: string }) => {
     let input = trim ? inputValue.trim() : inputValue;
 
     if (ignoreCase) {

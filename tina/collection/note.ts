@@ -36,6 +36,11 @@ const Note: Collection = {
       },
     },
     {
+      type: "string",
+      label: "Keywords",
+      name: "keywords",
+    },
+    {
       type: "rich-text",
       label: "Body",
       name: "_body",
