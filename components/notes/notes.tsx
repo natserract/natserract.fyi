@@ -18,22 +18,19 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
   );
 
   const notes = useMemo(() => {
+    const sort = (data: NotesType[]) =>
+      data.slice().sort((a, b) => a.node?.title.localeCompare(b.node?.title));
+
     if (searchDebounced.length > 1) {
       const options = defaultFilterOptions(data, {
         inputValue: searchDebounced,
       });
 
-      return options as NotesType[];
+      return sort(options as NotesType[]);
     }
 
-    return data;
+    return sort(data);
   }, [searchDebounced, data]);
-
-  const sortedNotesByAlphabet = useMemo(() => {
-    return notes
-      .slice()
-      .sort((a, b) => a.node?.title.localeCompare(b.node?.title));
-  }, [notes]);
 
   return (
     <div className="min-h-screen">
@@ -52,7 +49,7 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
         </div>
 
         <Virtuoso
-          data={sortedNotesByAlphabet}
+          data={notes}
           className="min-h-screen"
           components={{
             List: forwardRef((props, ref) => {
