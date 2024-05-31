@@ -63,7 +63,7 @@ export const Note = (props: NoteType) => {
       <div className={`flex-1 !pt-0 !pb-10 sm:!pb-24`}>
         <article
           data-tina-field={tinaField(props, "_body")}
-          className="prose dark:prose-dark prose-md text-sm prose-h2:font-eb-garamond prose-h3:font-eb-garamond prose-h4:font-eb-garamond w-full max-w-none"
+          className="prose dark:prose-dark blocks-notes prose-md text-sm prose-h2:font-eb-garamond prose-h3:font-eb-garamond prose-h4:font-eb-garamond w-full max-w-none"
         >
           <TinaMarkdown components={components} content={props._body} />
         </article>
