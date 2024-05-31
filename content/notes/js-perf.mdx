@@ -132,17 +132,6 @@ Slowest: Math.floor, Bitwise ( >> ),Bitwise ( ~~ )
 
 **For loop**:
 ```js
-function chunkArray(arr, chunkSize) {
-    const result = [];
-
-    for (let i = 0; i < arr.length; i += chunkSize) {
-        const chunk = arr.slice(i, i + chunkSize);
-        result.push(chunk);
-    }
-
-    return result;
-}
-
 function task(data) {
   return new Promise((resolve, reject) => {
     const results = data.reduce((acc, curr) => acc + curr, 0)
@@ -162,18 +151,6 @@ for (chunk of chunkArray(datasets, 10000)) {
 
 **Yield**:
 ```js
-function chunkArray(arr, chunkSize) {
-    const result = [];
-
-    for (let i = 0; i < arr.length; i += chunkSize) {
-        const chunk = arr.slice(i, i + chunkSize);
-        result.push(chunk);
-    }
-
-    return result;
-}
-
-
 function* task(data) {
   return new Promise((resolve, reject) => {
     const results = data.reduce((acc, curr) => acc + curr, 0)
