@@ -71,11 +71,30 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
 };
 
 const InnerNote: React.FC<NotesType> = memo(({ node }) => {
+  const makeLinkProps = () => {
+    // Prepare href
+    let href = `/notes/` + node._sys.filename;
+    if (node.link && node.link != "") {
+      href = node.link;
+    }
+
+    // Prepare target
+    let target = "_self";
+    if (node.link && node.link != "") {
+      target = "_blank";
+    }
+
+    return {
+      href,
+      target,
+    } satisfies React.AnchorHTMLAttributes<unknown>;
+  };
+
   return (
     <li>
       <Link
-        href={`/notes/` + node._sys.filename}
-        className="group block transition-all duration-150 ease-out"
+        {...makeLinkProps()}
+        className="group inline-block transition-all duration-150 ease-out"
       >
         <h2
           className={`text-sail-500 dark:text-white font-semibold title-font transition-all hover:underline duration-150 ease-out`}

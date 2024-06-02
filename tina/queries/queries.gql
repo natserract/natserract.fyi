@@ -25,6 +25,7 @@ query pageQuery {
                 id
                 date
                 title
+                link
                 keywords
 
                 _sys {

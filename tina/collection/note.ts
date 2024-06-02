@@ -37,6 +37,11 @@ const Note: Collection = {
     },
     {
       type: "string",
+      label: "Link",
+      name: "link",
+    },
+    {
+      type: "string",
       label: "Keywords",
       name: "keywords",
     },

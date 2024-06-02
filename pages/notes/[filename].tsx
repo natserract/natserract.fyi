@@ -40,9 +40,9 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const postsListData = await client.queries.noteConnection();
+  const notesListData = await client.queries.noteConnection();
   return {
-    paths: postsListData.data.noteConnection.edges.map((note) => ({
+    paths: notesListData.data.noteConnection.edges.map((note) => ({
       params: { filename: note.node._sys.filename },
     })),
     fallback: "blocking",

@@ -95,7 +95,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           <ul className="list-none flex flex-row gap-2">
             <li>
               <a
-                className="inline-block opacity-80 underline hover:text-blue-600 transition ease-out duration-150"
+                className="inline-block opacity-80 underline grayscale transition ease-out duration-150"
                 href="https://github.com/natserract"
                 target="_blank"
               >
@@ -105,7 +105,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
 
             <li>
               <a
-                className="inline-block opacity-80 underline hover:text-blue-600 transition ease-out duration-150"
+                className="inline-block opacity-80 underline grayscale transition ease-out duration-150"
                 href="https://www.linkedin.com/in/alfinsurya/"
                 target="_blank"
               >
@@ -115,7 +115,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
 
             <li>
               <a
-                className="inline-block opacity-80 underline hover:text-blue-600 transition ease-out duration-150"
+                className="inline-block opacity-80 underline grayscale transition ease-out duration-150"
                 href="mailto:alfins132@gmail.com"
                 target="_blank"
               >
