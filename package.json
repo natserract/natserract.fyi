@@ -28,7 +28,7 @@
     "@headlessui/react": "1.7.5",
     "@tailwindcss/typography": "^0.5.8",
     "@tinacms/auth": "^1.0.4",
-    "@tinacms/datalayer": "^1.2.33",
+    "@tinacms/datalayer": "^1.2.34",
     "date-fns": "^2.23.0",
     "next": "^13.3.1",
     "next-auth": "^4.24.7",
