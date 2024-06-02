@@ -1,19 +1,19 @@
-import { Container } from "../components/util/container";
-import { Section } from "../components/util/section";
-import { Posts } from "../components/posts";
-import { client } from "../tina/__generated__/client";
-import { Layout } from "../components/layout";
 import { InferGetStaticPropsType } from "next";
 
-export default function HomePage(
+import { Section } from "../components/util/section";
+import { client } from "../tina/__generated__/client";
+import { Notes } from "../components/notes";
+import { Layout } from "../components/layout";
+
+export default function NotesPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
-  const posts = props.data.postConnection.edges;
+  const notes = props.data.noteConnection.edges;
 
   return (
     <Layout>
       <Section className="flex-1">
-        <Posts data={posts} />
+        <Notes data={notes} />
       </Section>
     </Layout>
   );
@@ -28,6 +28,6 @@ export const getStaticProps = async () => {
   };
 };
 
-export type PostsType = InferGetStaticPropsType<
+export type NotesType = InferGetStaticPropsType<
   typeof getStaticProps
->["data"]["postConnection"]["edges"][number];
+>["data"]["noteConnection"]["edges"][number];

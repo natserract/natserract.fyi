@@ -1,0 +1,186 @@
+---
+title: JS Performance
+date: 2024-05-29
+keywords: javascript, tweak, typescript, performance, array, best practices, bitwise
+---
+
+## Array Insert
+
+**[Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice?retiredLocale=id) version**:
+
+```js
+function arrayInsert(array, index, value) {
+  array.splice(index, 0, value);
+}
+
+const months = ['Jan', 'March', 'April', 'June'];
+arrayInsert(months, 1, 'Feb');
+```
+
+**Tweaked version**:
+
+```js
+function arrayInsert(array, index, value) {
+  let end = array.length;
+  while (end > index) {
+    const previousEnd = end - 1;
+    array[end] = array[previousEnd];
+    end = previousEnd;
+  }
+  array[index] = value;
+}
+
+const months = ['Jan', 'March', 'April', 'June'];
+arrayInsert(months, 1, 'Feb');
+```
+
+**Results**:
+```js
+Executions per second:
+- With array.splice: 6,746,260 ops/sec ±1.70% (61 runs sampled)
+- Tweaked version:	15,970,211 ops/sec ±4.09% (55 runs sampled) ✔
+
+Fastest: Tweaked version
+Slowest: With Array.splice
+```
+
+> Benchmark: https://www.measurethat.net/Benchmarks/Show/30916/0/array-splice-is-slow
+
+`Array.splice()` is not fast because it has to allocate an array for the elements which were removed. This causes memory pressure and slows down code when most of the time [we don't care](https://github.com/angular/angular/blob/80f472f9f4c09af33f41f7e8dd656eff0b74d03f/packages/core/src/util/array_utils.ts#L109) about the deleted items array.
+
+
+## Array Median
+
+**Math.floor**:
+
+```js
+const median = (leafRows) => {
+  if (!leafRows.length) {
+    return
+  }
+
+  const values = leafRows
+  if (values.length === 1) {
+    return values[0]
+  }
+
+  const mid = Math.floor(values.length / 2)
+  const nums = values.sort((a, b) => a - b)
+  return values.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2
+}
+
+median([...Array(10_000_000).keys()])
+```
+
+**Bitwise ( >> )**:
+```js
+const median = (leafRows) => {
+  if (!leafRows.length) {
+    return
+  }
+
+  const values = leafRows
+  if (values.length === 1) {
+    return values[0]
+  }
+
+  let start = 0;
+  let end = values.length;
+
+  const mid = start + ((end - start) >> 1);
+  const nums = values.sort((a, b) => a - b)
+  return values.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2
+}
+
+median([...Array(10_000_000).keys()])
+```
+
+**Bitwise ( ~~ )**:
+```js
+const median = (leafRows) => {
+  if (!leafRows.length) {
+    return
+  }
+
+  const values = leafRows
+  if (values.length === 1) {
+    return values[0]
+  }
+
+  const mid = ~~(values.length / 2)
+  const nums = values.sort((a, b) => a - b)
+  return values.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2
+}
+
+median([...Array(10_000_000).keys()])
+```
+
+**Results**:
+```js
+Executions per second:
+- Math.floor: 1.05 ops/sec ±2.88% (7 runs sampled)
+- Bitwise ( >> ): 1.06 ops/sec ±4.33% (7 runs sampled)
+- Bitwise ( ~~ ): 1.07 ops/sec ±3.05% (7 runs sampled) ✔
+
+Fastest: Bitwise ( ~~ ), Bitwise ( >> ), Math.floor
+Slowest: Math.floor, Bitwise ( >> ),Bitwise ( ~~ )
+```
+
+> Benchmark: https://www.measurethat.net/Benchmarks/Show/30919/3/find-the-fastest-median
+
+## Batching strategy for large datasets
+
+**For loop**:
+```js
+function task(data) {
+  return new Promise((resolve, reject) => {
+    const results = data.reduce((acc, curr) => acc + curr, 0)
+    resolve(results)
+  })
+}
+
+const datasets = [...Array(5_000_000).keys()]
+for (chunk of chunkArray(datasets, 10000)) {
+  task(chunk).then(
+    (res) => {
+      //
+    }
+  )
+}
+```
+
+**Yield**:
+```js
+function* task(data) {
+  return new Promise((resolve, reject) => {
+    const results = data.reduce((acc, curr) => acc + curr, 0)
+    resolve(results)
+  })
+}
+
+function* process(data) {
+  for (chunk of chunkArray(data, 10000)) {
+  	yield task(chunk)
+  }
+}
+
+const datasets = [...Array(5_000_000).keys()]
+for (data of process(datasets)) {
+  const resp = data.next().value
+  resp.then((res) => {
+    //
+  })
+}
+```
+
+**Results**:
+```js
+Executions per second:
+- For loop: 2.28 ops/sec ±2.34% (10 runs sampled)
+- Yield: 2.35 ops/sec ±2.63% (10 runs sampled) ✔
+
+Fastest: Yield, For loop
+Slowest: For loop, Yield
+```
+
+> Benchmark: https://www.measurethat.net/Benchmarks/Show/30923/5/batching

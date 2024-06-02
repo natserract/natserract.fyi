@@ -32,6 +32,9 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
       ? headerColor.primary[theme.color]
       : headerColor.default;
 
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
   const activeItemClasses = {
     blue: "border-b-3 border-blue-200 text-blue-700 dark:text-blue-300 font-medium dark:border-blue-700",
     teal: "border-b-3 border-teal-200 text-teal-700 dark:text-teal-300 font-medium dark:border-teal-700",
@@ -64,26 +67,32 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
 
   return (
     <div
-      className={`relative overflow-hidden bg-gradient-to-b ${headerColorCss}`}
+      className={`relative overflow-hidden h-full border-b md:border-b-0 border-sail-200`}
     >
-      <Container size="custom" className="py-0 relative z-10 max-w-8xl">
-        <div className="flex items-center justify-between gap-6">
-          <h4 className="select-none text-2xl text-gray-800 font-bold tracking-tight my-4 transition duration-150 ease-out transform">
+      <div className="relative z-10 w-full px-0 py-1 md:py-0 md:h-[100vh]">
+        <div className="flex md:flex-col items-center justify-between md:items-start md:justify-normal gap-6">
+          <h4 className="select-none text-3xl text-gray-800 font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
             <Link
               href="/posts"
-              className="flex f gap-1 items-center whitespace-nowrap tracking-[.002em]"
+              className="flex gap-1 items-center whitespace-nowrap tracking-[.002em]"
             >
-              <span className="block" data-tina-field={tinaField(data, "name")}>
+              <span
+                className="block font-eb-garamond font-bold"
+                data-tina-field={tinaField(data, "name")}
+              >
                 {data.name}
+                <i className="block font-normal font-public-sans text-[12px] -mt-1 not-italic">
+                  Personal and Research Notes
+                </i>
               </span>
             </Link>
           </h4>
 
-          <div className="navigation-menu">
+          <div className="navigation-menu sm:flex sm:flex-row sm:items-center">
             <MobileMenu data={data} key={router.asPath} />
 
             <div className="hidden sm:block">
-              <ul className="flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
+              <ul className="sm:flex md:block sm:flex-row">
                 {data.nav &&
                   data.nav.map((item, i) => {
                     const activeItem =
@@ -91,57 +100,15 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
                         ? router.asPath === "/"
                         : router.asPath.includes(item.href)) && isClient;
                     return (
-                      <li
-                        key={`${item.label}-${i}`}
-                        className={`${
-                          activeItem ? activeItemClasses[theme.color] : ""
-                        }`}
-                      >
+                      <li key={`${item.label}-${i}`}>
                         <Link
                           data-tina-field={tinaField(item, "label")}
                           href={`/${item.href}`}
-                          className={`relative select-none	text-base inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 py-8 px-4 ${
-                            activeItem ? `` : `opacity-70`
+                          className={`relative text-gray-800 select-none w-full text-xs inline-block hover:underline transition duration-150 ease-out hover:opacity-100 py-2 px-6 ${
+                            activeItem ? `text-sail-500 underline` : ``
                           }`}
                         >
                           {item.label}
-                          {activeItem && (
-                            <svg
-                              className={`absolute bottom-0 left-1/2 w-[180%] h-full -translate-x-1/2 -z-1 opacity-10 dark:opacity-15 ${
-                                activeBackgroundClasses[theme.color]
-                              }`}
-                              preserveAspectRatio="none"
-                              viewBox="0 0 230 230"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <rect
-                                x="230"
-                                y="230"
-                                width="230"
-                                height="230"
-                                transform="rotate(-180 230 230)"
-                                fill="url(#paint0_radial_1_33)"
-                              />
-                              <defs>
-                                <radialGradient
-                                  id="paint0_radial_1_33"
-                                  cx="0"
-                                  cy="0"
-                                  r="1"
-                                  gradientUnits="userSpaceOnUse"
-                                  gradientTransform="translate(345 230) rotate(90) scale(230 115)"
-                                >
-                                  <stop stopColor="currentColor" />
-                                  <stop
-                                    offset="1"
-                                    stopColor="currentColor"
-                                    stopOpacity="0"
-                                  />
-                                </radialGradient>
-                              </defs>
-                            </svg>
-                          )}
                         </Link>
                       </li>
                     );
@@ -150,12 +117,11 @@ export const Header = ({ data }: { data: GlobalHeader }) => {
             </div>
           </div>
         </div>
-        <div
-          className={`absolute h-1 bg-gradient-to-r from-transparent ${
-            data.color === "primary" ? `via-white` : `via-black dark:via-white`
-          } to-transparent bottom-0 left-4 right-4 -z-1 opacity-5`}
-        />
-      </Container>
+
+        <div className="px-6 text-[11px] absolute bottom-10 hidden md:block">
+          <span className="block">© {currentYear} Alfin Surya</span>
+        </div>
+      </div>
     </div>
   );
 };

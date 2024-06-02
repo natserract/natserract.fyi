@@ -26,12 +26,12 @@ export const Section = ({ children, color = "", className = "" }) => {
     color === "primary"
       ? sectionColor.primary[theme.color]
       : sectionColor[color]
-      ? sectionColor[color]
-      : sectionColor.default;
+        ? sectionColor[color]
+        : sectionColor.default;
 
   return (
     <section
-      className={`flex-1 relative transition duration-150 ease-out body-font overflow-hidden ${sectionColorCss} ${className}`}
+      className={`flex-1 relative transition duration-150 ease-out body-font overflow-hidden ${className}`}
     >
       {children}
     </section>
