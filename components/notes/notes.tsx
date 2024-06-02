@@ -8,6 +8,9 @@ import { useDebounce } from "./hooks";
 
 const defaultFilterOptions = filterOptions();
 
+const sort = (data: NotesType[]) =>
+  data.slice().sort((a, b) => a.node?.title.localeCompare(b.node?.title));
+
 export const Notes = ({ data }: { data: NotesType[] }) => {
   const [search, setInputSearch] = useState("");
   const searchDebounced = useDebounce(search);
@@ -18,9 +21,6 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
   );
 
   const notes = useMemo(() => {
-    const sort = (data: NotesType[]) =>
-      data.slice().sort((a, b) => a.node?.title.localeCompare(b.node?.title));
-
     if (searchDebounced.length > 1) {
       const options = defaultFilterOptions(data, {
         inputValue: searchDebounced,
