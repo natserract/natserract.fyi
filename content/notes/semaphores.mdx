@@ -16,6 +16,23 @@ A semaphore is somewhat like an integer variable, but is special in that its ope
 
 Semaphores are also specifically designed to support an efficient waiting mechanism. If a thread can’t proceed until some change occurs, it is undesirable for that thread to be looping and repeatedly checking the state until it changes. In this case semaphore can be used to represent the right of a thread to proceed. A non-zero value means the thread should continue, zero means to hold off. When a thread attempts to decrement a unavailable semaphore (with a zero value), it efficiently waits until another thread increments the semaphore to signal the state change that will allow it to proceed.
 
+### How it works
+```tsx
+for (let attempt = 0; ; attempt++) {
+    try {
+        return (await this.client.createInvoice(data)) as CreateInvoiceResponse
+    } catch (err) {
+        if (attempt < 3) {
+            continue
+        } else {
+            throw err
+        }
+    }
+}
+
+// The line is here: for (let attempt = 0; ; attempt++) {..}
+```
+
 ### Semaphore Tools (NodeJS)
 
 * [https://github.com/vercel/async-sema](https://github.com/vercel/async-sema)

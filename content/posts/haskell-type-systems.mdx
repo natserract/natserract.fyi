@@ -64,23 +64,23 @@ f x = x * 2
 
 ## Type Signature (Type Annotation)
 
-Type signature secara _global_ merupakan sebuah tipe untuk **mendefinisikan tipe variabel dan fungsi**, salah satu kegunaannya untuk menghindari _ambigous type_. Disini saya bagi penulisan type signature menjadi beberapa bentuk: <sub>(_type signature lainnya ada di next section, ikutin saja alurnya_)</sub>
+Type signature secara _global_ merupakan sebuah tipe untuk **mendefinisikan tipe variabel dan fungsi**, salah satu kegunaannya untuk menghindari _ambigous type_. Disini saya bagi penulisan type signature menjadi beberapa bentuk: (_type signature lainnya ada di next section, ikutin saja alurnya_)
 
-- Type signature with <b>_argument_</b>:
+- Type signature with **argument**:
 
 ```hs
--- tsArg:: Argument_0 -> Argument_1 as Return
+-- tsArg:: Argument_0 -> Return
 tsArg :: Integer -> Integer
 tsArg x = x * 10
 
--- tsArgWFn:: Argument_0 -> Argument_1 -> Argument_2 as Return
+-- tsArgWFn:: Argument_0 -> Argument_1 -> Return
 tsArgWFn :: Integer -> Integer -> Integer
 tsArgWFn x y = x * y
 ```
 
 Tipe argumen input pada fungsi `tsArg` adalah `x` dengan bentuk `Integer`, begitu juga dengan fungsi `tsArgWFn` mempunyai **2 tipe argumen input** yaitu `x` dan `y`.
 
-- Type signature with <b>parenthesized (curried types)</b>:
+- Type signature with **parenthesized (curried types)**:
 
 ```hs
 tsArgP :: Integer -> Integer -> Integer
@@ -125,13 +125,13 @@ tsArgP x y = x * y
 
 > `t1 -> (t2 -> t3)` setiap argumen yang dikelompokkan (grouping) dengan tanda kurung, itu dihitung satu argumen. Berbeda dengan `t1 -> t2 -> t3`.
 
-- Tipe fungsi `tsArgP`(1), mempunyai **3 argumen** _x as a0_ -> _y as a1_ -> _x _ y as a2\*.
+- Tipe fungsi `tsArgP`(1), mempunyai **3 argumen** _x as a0_ -> _y as a1_ -> _x _ y as a2.
 - Tipe fungsi `tsArgP`(2), **2 argumen** _x as a0_ -> (_y as a1_)
 
 **Read**:
 
-1. <b>_x as a0_ sebagai argumen pertama</b> dari `tsArgP`,
-2. <b>_y as a1 (a1_A -> a1_B)_ sebagai argumen kedua</b> dari `tsArgP`,
+1. **x as a0 sebagai argumen pertama** dari `tsArgP`,
+2. **y as a1 (a1_A -> a1_B)_ sebagai argumen kedua** dari `tsArgP`,
    - `a1` mempunyai dua argumen `a1_A` dan `a1_B`
    - Bentuk kembalian dari `a1` adalah `a1_B`
    - So, last type signature nya adalah `a0 -> a1_B`
@@ -222,7 +222,7 @@ function loggingIdentity<Type>(arg: Type[]): Type[];
 
 Cuman saya ambil kesimpulan(_in haskell perspective_):
 
-- **Ad hoc polymorphism**: Operasi yang menerima argumen dengan [kelas tipe](https://en.wikibooks.org/wiki/Haskell/Classes_and_types), baik jumlah jenisnya satu atau lebih, sama ataupun berbeda.
+- **Ad hoc polymorphism**: Operasi yang menerima argumen dengan [type classes](https://en.wikibooks.org/wiki/Haskell/Classes_and_types), baik jumlah jenisnya satu atau lebih, sama ataupun berbeda.
 - **Overloading**: Jenis polimorfisme suatu method/fungsi, yang dilakukan di dalam [type classes](https://en.wikibooks.org/wiki/Haskell/Classes_and_types). Compiler tidak akan meng-izinkan Anda melakukan ini:
 
 ```hs
