@@ -3637,12 +3637,19 @@
     yup "^0.32.9"
     zod "^3.14.3"
 
-"@tinacms/datalayer@1.2.34", "@tinacms/datalayer@^1.2.34":
+"@tinacms/datalayer@1.2.34":
   version "1.2.34"
   resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.34.tgz#ba57805d8e0222604a805f66167cb7fb4def0a95"
   integrity sha512-I2WxY5VpXKSWZa0pvU37C3XMHpCZLacWHwU23oZqlFNeLV7h7z3IZFn7DmalgS4N0UKbfq3PDs+qzDlYkI79jg==
   dependencies:
     "@tinacms/graphql" "1.4.34"
+
+"@tinacms/datalayer@^1.2.35":
+  version "1.2.35"
+  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.35.tgz#3c3d0e0b7e0b17070c84bdd802069ea97ab08596"
+  integrity sha512-xq06Loy2Tk7DIvW5/ezIcpRmlNQsRM3VWRTA3BWLtK/4mEt19161N4346pdVkVZSZoHne7X33EIgRo120kqFzg==
+  dependencies:
+    "@tinacms/graphql" "1.4.35"
 
 "@tinacms/graphql@1.4.34":
   version "1.4.34"
@@ -9848,10 +9855,10 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.5.tgz#bb752da340a16e4d87d52baab47331a2d9bc31b4"
-  integrity sha512-6AkWfWxsLECvF6XEmUenArpmQMSGcdl+dQAtdC1+4I2v3R1crH4JTXWBw2a9JM/HVcT3ATbrYm01Bym++QejSw==
+tinacms-gitprovider-github@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.6.tgz#d72961b8cdd48361554115dce96698d4ce86fee3"
+  integrity sha512-tBzCbF96+p8KABAKn9qGhetwPG67MkJLcjddH5BpMrmR/cbH6Abela7OFKClwO07ZGMpaqy/v5bhzgXkYKUAjg==
   dependencies:
     "@octokit/rest" "^19.0.7"
     js-base64 "^3.7.4"
