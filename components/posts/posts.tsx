@@ -7,6 +7,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { useTheme } from "../layout";
 import format from "date-fns/format";
 import { PostsType } from "../../pages/posts";
+import { OSSActivities } from "../blocks/oss-activities";
 
 const components: Components<any> = {
   p: (props) => {
@@ -125,6 +126,8 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           </ul>
         </div>
       </div>
+
+      <OSSActivities />
 
       <div>
         <h3 className="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond">
