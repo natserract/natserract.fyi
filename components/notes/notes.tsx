@@ -57,7 +57,7 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
                 <ul
                   //@ts-expect-error Ref always HTMLDivElement
                   ref={ref}
-                  className="list-disc ml-5"
+                  className="list-disc ml-5 grid grid-cols-1 sm:grid-cols-2"
                   {...props}
                 />
               );
