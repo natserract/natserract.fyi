@@ -32,11 +32,26 @@
     font-size: 1.5em;
 }
 
-a[target="_blank"] {
+a[target="_blank"]:not(.external-link) {
     background-position: center right;
     background-repeat: no-repeat;
     background-image: url("public/external-link-ltr-icon.png");
     padding-right: 13px;
+}
+
+a[target="_blank"].external-link {
+    position: relative;
+}
+
+a[target="_blank"].external-link:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-image: url("public/external-link-ltr-icon.png");
 }
 
 .blocks-notes.prose

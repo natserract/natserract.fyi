@@ -50,14 +50,14 @@ export const Notes = ({ data }: { data: NotesType[] }) => {
 
         <Virtuoso
           data={notes}
-          className="min-h-screen"
+          useWindowScroll
           components={{
             List: forwardRef((props, ref) => {
               return (
                 <ul
                   //@ts-expect-error Ref always HTMLDivElement
                   ref={ref}
-                  className="list-disc ml-5 grid grid-cols-1 sm:grid-cols-2"
+                  className="list-disc ml-5"
                   {...props}
                 />
               );
@@ -91,15 +91,21 @@ const InnerNote: React.FC<NotesType> = memo(({ node }) => {
   };
 
   return (
-    <li>
+    <li className="border-b border-gray-200">
       <Link
         {...makeLinkProps()}
-        className="group inline-block transition-all duration-150 ease-out"
+        className="group block !bg-none transition-all duration-150 ease-out"
       >
         <h2
           className={`text-sail-500 dark:text-white font-semibold title-font transition-all hover:underline duration-150 ease-out`}
         >
           {node?.title}
+
+          {node?.link && (
+            <span className="text-xs font-normal text-gray-300 ml-1">
+              ({node.link})
+            </span>
+          )}
         </h2>
       </Link>
     </li>
