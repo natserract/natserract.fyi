@@ -5,6 +5,10 @@ type Activity = {
 
 const data: Activity[] = [
   {
+    org: "roboflow.inference",
+    prUrl: "https://github.com/roboflow/inference/pull/488",
+  },
+  {
     org: "material-ui",
     prUrl: "https://github.com/mui/material-ui/pull/42533",
   },
