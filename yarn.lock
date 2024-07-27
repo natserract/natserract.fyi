@@ -3760,12 +3760,12 @@
     yup "^0.32.9"
     zod "^3.14.3"
 
-"@tinacms/datalayer@^1.2.35":
-  version "1.2.35"
-  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.35.tgz#3c3d0e0b7e0b17070c84bdd802069ea97ab08596"
-  integrity sha512-xq06Loy2Tk7DIvW5/ezIcpRmlNQsRM3VWRTA3BWLtK/4mEt19161N4346pdVkVZSZoHne7X33EIgRo120kqFzg==
+"@tinacms/datalayer@^1.2.39":
+  version "1.2.39"
+  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.39.tgz#be0e17db36dd3e5b9b157b1ecb2d670409d681f4"
+  integrity sha512-W7Sk+eqe8FpiUjBxHkJBYN25M1zthbUaWwcwYoQ1OAANXZp5fmqlOc4HONqWvY/LjkWcDOyYMjWqlRyBkit39g==
   dependencies:
-    "@tinacms/graphql" "1.4.35"
+    "@tinacms/graphql" "1.4.39"
 
 "@tinacms/graphql@1.4.35":
   version "1.4.35"
@@ -9982,13 +9982,14 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.6.tgz#d72961b8cdd48361554115dce96698d4ce86fee3"
-  integrity sha512-tBzCbF96+p8KABAKn9qGhetwPG67MkJLcjddH5BpMrmR/cbH6Abela7OFKClwO07ZGMpaqy/v5bhzgXkYKUAjg==
+tinacms-gitprovider-github@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.10.tgz#ccef2bcbf9d30fc617ba62163bfc95f166194518"
+  integrity sha512-h46sOb45PHCYEDvdm3Fl2/nF3r30dnGeUXeRoQ3PTJdwmTNUvEIo4XNiXqQN/J75xj51gYP1p0p9Ji8D3W4dFg==
   dependencies:
     "@octokit/rest" "^19.0.7"
     js-base64 "^3.7.4"
+    typescript "4.6.4"
 
 tinacms@2.1.0:
   version "2.1.0"
@@ -10251,6 +10252,11 @@ typedoc@^0.26.3:
     minimatch "^9.0.5"
     shiki "^1.9.1"
     yaml "^2.4.5"
+
+typescript@4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 typescript@^4.5.2:
   version "4.9.5"
