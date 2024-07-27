@@ -5,9 +5,7 @@ blocks:
       # About
 
 
-      My name is Alfin Surya. I'm from Bali and I am a professional web-focused
-      software engineer.
-
+      My name is Alfin Surya. I'm a software engineer.
 
       I am mostly self-taught, and I teach myself whatever topic interests me.
       Most of the times [learn things from the hard way](https://www.vice.com/en/article/53dpeq/in-defense-of-learning-code-the-hard-way), I mainly work with
@@ -17,12 +15,9 @@ blocks:
 
 
       **Area of interest:**
-
-
       DX(developer experience), software architecture, programming lang, remote
       working, Web Assembly, AI, WordPress, careers not job, KISS(keep it simple
       silly), type system, FP, OO, much more.
-
 
       > *There are no solutions. There are only trade-offs. And you try to get
       the best trade-off you can get. That’s all you can hope for. -Thomas
@@ -30,4 +25,3 @@ blocks:
     color: default
     _template: content
 ---
-

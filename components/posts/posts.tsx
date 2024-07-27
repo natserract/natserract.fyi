@@ -59,8 +59,7 @@ export const Posts = ({ data }: { data: PostsType[] }) => {
           className="mb-5 block"
         />
         <p className="mb-2">
-          My name is <b>Alfin Surya</b>. I'm from Bali and I am a professional
-          web-focused software engineer.
+          My name is <b>Alfin Surya</b>. I'm a software engineer
         </p>
         <p className="mb-2">
           I am mostly self-taught, and I teach myself whatever topic interests

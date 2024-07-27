@@ -17,10 +17,6 @@
         "label": "Notes"
       },
       {
-        "href": "projects",
-        "label": "Projects"
-      },
-      {
         "href": "talks",
         "label": "Talks"
       }
