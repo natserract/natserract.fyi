@@ -3472,10 +3472,10 @@
   resolved "https://registry.yarnpkg.com/@sambego/storybook-styles/-/storybook-styles-1.0.0.tgz#4f840ee26dd0b25dcb803a75caa42e16071dcaae"
   integrity sha512-n0SqZwDewUDRaStEcoNMiYy9qovaLVStsh4Gb2dc2LLiG3IIK0UXdeR1N7puVuRihJq/192uOyGPCjZ/NAteuA==
 
-"@shikijs/core@1.12.0":
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/@shikijs/core/-/core-1.12.0.tgz#58ae6d02da7934edd9c10951a989c9cde0cf736b"
-  integrity sha512-mc1cLbm6UQ8RxLc0dZES7v5rkH+99LxQp/ZvTqV3NLyYsO/fD6JhEflP1H5b2SDq9gI0+0G36AVZWxvounfR9w==
+"@shikijs/core@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@shikijs/core/-/core-1.11.1.tgz#a102cf56f32fa8cf3ceb9f918f2da5511782efe7"
+  integrity sha512-Qsn8h15SWgv5TDRoDmiHNzdQO2BxDe86Yq6vIHf5T0cCvmfmccJKIzHtep8bQO9HMBZYCtCBzaXdd1MnxZBPSg==
   dependencies:
     "@types/hast" "^3.0.4"
 
@@ -3697,14 +3697,14 @@
     typescript "^5.5.3"
     zod "^3.14.3"
 
-"@tinacms/auth@^1.0.6":
+"@tinacms/auth@^1.0.4":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@tinacms/auth/-/auth-1.0.6.tgz#7acc6e1e935db43b796605e32fc62ba773a3561c"
   integrity sha512-1GcSkQo8MgZNt+b/TVZx06YhvyJ6nhCvRCDD/EGzBRDOoAqTFiw5g6zrf+acjRkSEUyt9moTtxBotW+DHLNVyw==
   dependencies:
     fetch-ponyfill "^7.1.0"
 
-"@tinacms/cli@^1.5.52":
+"@tinacms/cli@^1.5.46":
   version "1.5.52"
   resolved "https://registry.yarnpkg.com/@tinacms/cli/-/cli-1.5.52.tgz#3e9ec8265c5e9047e975462b025a06b312b9dbe0"
   integrity sha512-8Q1291mold5Lz6TktWKng5ftRQx70jb3pBTodaQ/pEjFJw08zYySKPqrnOtwVwK2UOjrfAfNa62e34lm34IE0g==
@@ -3760,12 +3760,12 @@
     yup "^0.32.9"
     zod "^3.14.3"
 
-"@tinacms/datalayer@^1.2.35":
-  version "1.2.35"
-  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.35.tgz#3c3d0e0b7e0b17070c84bdd802069ea97ab08596"
-  integrity sha512-xq06Loy2Tk7DIvW5/ezIcpRmlNQsRM3VWRTA3BWLtK/4mEt19161N4346pdVkVZSZoHne7X33EIgRo120kqFzg==
+"@tinacms/datalayer@^1.2.39":
+  version "1.2.39"
+  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.39.tgz#be0e17db36dd3e5b9b157b1ecb2d670409d681f4"
+  integrity sha512-W7Sk+eqe8FpiUjBxHkJBYN25M1zthbUaWwcwYoQ1OAANXZp5fmqlOc4HONqWvY/LjkWcDOyYMjWqlRyBkit39g==
   dependencies:
-    "@tinacms/graphql" "1.4.35"
+    "@tinacms/graphql" "1.4.39"
 
 "@tinacms/graphql@1.4.35":
   version "1.4.35"
@@ -9568,11 +9568,11 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 shiki@^1.9.1:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/shiki/-/shiki-1.12.0.tgz#fd4900442405760df5c5819b5baa3892ef9612d2"
-  integrity sha512-BuAxWOm5JhRcbSOl7XCei8wGjgJJonnV0oipUupPY58iULxUGyHhW5CF+9FRMuM1pcJ5cGEJGll1LusX6FwpPA==
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/shiki/-/shiki-1.11.1.tgz#6c06c5fcf55f1dac2db2596af935fef6a41a209d"
+  integrity sha512-VHD3Q0EBXaaa245jqayBe5zQyMQUdXBFjmGr9MpDaDpAKRMYn7Ff00DM5MLk26UyKjnml3yQ0O2HNX7PtYVNFQ==
   dependencies:
-    "@shikijs/core" "1.12.0"
+    "@shikijs/core" "1.11.1"
     "@types/hast" "^3.0.4"
 
 side-channel@^1.0.4:
@@ -9982,13 +9982,14 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.6.tgz#d72961b8cdd48361554115dce96698d4ce86fee3"
-  integrity sha512-tBzCbF96+p8KABAKn9qGhetwPG67MkJLcjddH5BpMrmR/cbH6Abela7OFKClwO07ZGMpaqy/v5bhzgXkYKUAjg==
+tinacms-gitprovider-github@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.10.tgz#ccef2bcbf9d30fc617ba62163bfc95f166194518"
+  integrity sha512-h46sOb45PHCYEDvdm3Fl2/nF3r30dnGeUXeRoQ3PTJdwmTNUvEIo4XNiXqQN/J75xj51gYP1p0p9Ji8D3W4dFg==
   dependencies:
     "@octokit/rest" "^19.0.7"
     js-base64 "^3.7.4"
+    typescript "4.6.4"
 
 tinacms@2.1.0:
   version "2.1.0"
@@ -10251,6 +10252,11 @@ typedoc@^0.26.3:
     minimatch "^9.0.5"
     shiki "^1.9.1"
     yaml "^2.4.5"
+
+typescript@4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 typescript@^4.5.2:
   version "4.9.5"
