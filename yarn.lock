@@ -3735,12 +3735,12 @@
     yup "^0.32.9"
     zod "^3.14.3"
 
-"@tinacms/datalayer@^1.2.39":
-  version "1.2.39"
-  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.39.tgz#be0e17db36dd3e5b9b157b1ecb2d670409d681f4"
-  integrity sha512-W7Sk+eqe8FpiUjBxHkJBYN25M1zthbUaWwcwYoQ1OAANXZp5fmqlOc4HONqWvY/LjkWcDOyYMjWqlRyBkit39g==
+"@tinacms/datalayer@^1.2.40":
+  version "1.2.40"
+  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.40.tgz#90247e353399be5981fe3d662c3293ebc5557f67"
+  integrity sha512-m722Jq+2ZTLV86dQ/7p/iwYz7BHaVUfpRaD2YxgZ0Nci1sFbd6ELSyZTze74Ey/5owIJMr8qEvJpn5i6O33TWQ==
   dependencies:
-    "@tinacms/graphql" "1.4.39"
+    "@tinacms/graphql" "1.4.40"
 
 "@tinacms/graphql@1.4.39":
   version "1.4.39"
@@ -3762,6 +3762,33 @@
     js-yaml "^3.14.1"
     jsonpath-plus "^6.0.1"
     lodash "^4.17.20"
+    many-level "^2.0.0"
+    micromatch "4.0.5"
+    normalize-path "^3.0.0"
+    readable-stream "^4.3.0"
+    scmp "^2.1.0"
+    yup "^0.32.9"
+
+"@tinacms/graphql@1.4.40":
+  version "1.4.40"
+  resolved "https://registry.yarnpkg.com/@tinacms/graphql/-/graphql-1.4.40.tgz#ba3119211843c8cb8f6bdbd9a86c4ce8730c0c81"
+  integrity sha512-u/ZYrn83IsggZLYFCvIt/uVdI5oHn2jHF3RyYZ3TfIc/L9X9h+A7Dm3HjRpZ+n3AvVw2LNSpyRltPXnGh96EAQ==
+  dependencies:
+    "@iarna/toml" "^2.2.5"
+    "@tinacms/mdx" "1.3.29"
+    "@tinacms/schema-tools" "1.5.0"
+    abstract-level "^1.0.3"
+    date-fns "^2.21.1"
+    fast-glob "^3.2.5"
+    fs-extra "^9.0.1"
+    glob-parent "^6.0.2"
+    graphql "15.8.0"
+    gray-matter "^4.0.2"
+    isomorphic-git "^1.21.0"
+    js-sha1 "^0.6.0"
+    js-yaml "^3.14.1"
+    jsonpath-plus "^6.0.1"
+    lodash "4.17.20"
     many-level "^2.0.0"
     micromatch "4.0.5"
     normalize-path "^3.0.0"
@@ -7019,6 +7046,11 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash@4.17.20:
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
+
 lodash@^4.0.1, lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@~4.17.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -9762,14 +9794,14 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.10.tgz#ccef2bcbf9d30fc617ba62163bfc95f166194518"
-  integrity sha512-h46sOb45PHCYEDvdm3Fl2/nF3r30dnGeUXeRoQ3PTJdwmTNUvEIo4XNiXqQN/J75xj51gYP1p0p9Ji8D3W4dFg==
+tinacms-gitprovider-github@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.11.tgz#ff99cec095c2cac84f60b3a8405ecdbb988a8906"
+  integrity sha512-a0unwIj/t0tgifXNLpVIerpFTtxaypnHd7+R39+OnUwZCgegeXwnnRqQK+lNDi6zr+drIbWmT2LUNQqradOOrg==
   dependencies:
     "@octokit/rest" "^19.0.7"
     js-base64 "^3.7.4"
-    typescript "4.6.4"
+    typescript "4.7.4"
 
 tinacms@2.1.0, tinacms@^2.1.0:
   version "2.1.0"
@@ -9974,10 +10006,10 @@ typedoc@^0.26.3:
     shiki "^1.9.1"
     yaml "^2.4.5"
 
-typescript@4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
-  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
+typescript@4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 typescript@^4.5.2:
   version "4.9.5"
