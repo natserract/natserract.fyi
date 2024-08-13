@@ -3897,12 +3897,12 @@
     yup "^0.32.9"
     zod "^3.14.3"
 
-"@tinacms/datalayer@^1.2.39":
-  version "1.2.39"
-  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.39.tgz#be0e17db36dd3e5b9b157b1ecb2d670409d681f4"
-  integrity sha512-W7Sk+eqe8FpiUjBxHkJBYN25M1zthbUaWwcwYoQ1OAANXZp5fmqlOc4HONqWvY/LjkWcDOyYMjWqlRyBkit39g==
+"@tinacms/datalayer@^1.2.40":
+  version "1.2.40"
+  resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.2.40.tgz#90247e353399be5981fe3d662c3293ebc5557f67"
+  integrity sha512-m722Jq+2ZTLV86dQ/7p/iwYz7BHaVUfpRaD2YxgZ0Nci1sFbd6ELSyZTze74Ey/5owIJMr8qEvJpn5i6O33TWQ==
   dependencies:
-    "@tinacms/graphql" "1.4.39"
+    "@tinacms/graphql" "1.4.40"
 
 "@tinacms/graphql@1.4.39":
   version "1.4.39"
@@ -10018,14 +10018,14 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.10.tgz#ccef2bcbf9d30fc617ba62163bfc95f166194518"
-  integrity sha512-h46sOb45PHCYEDvdm3Fl2/nF3r30dnGeUXeRoQ3PTJdwmTNUvEIo4XNiXqQN/J75xj51gYP1p0p9Ji8D3W4dFg==
+tinacms-gitprovider-github@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.11.tgz#ff99cec095c2cac84f60b3a8405ecdbb988a8906"
+  integrity sha512-a0unwIj/t0tgifXNLpVIerpFTtxaypnHd7+R39+OnUwZCgegeXwnnRqQK+lNDi6zr+drIbWmT2LUNQqradOOrg==
   dependencies:
     "@octokit/rest" "^19.0.7"
     js-base64 "^3.7.4"
-    typescript "4.6.4"
+    typescript "4.7.4"
 
 tinacms@2.1.0:
   version "2.1.0"
@@ -10286,10 +10286,10 @@ typedoc@^0.26.3:
     shiki "^1.9.1"
     yaml "^2.4.5"
 
-typescript@4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
-  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
+typescript@4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 typescript@^4.5.2:
   version "4.9.5"
