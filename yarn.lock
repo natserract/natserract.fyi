@@ -2140,7 +2140,7 @@
     node-fetch "^2.6.7"
     universal-user-agent "^6.0.0"
 
-"@octokit/rest@^19.0.13":
+"@octokit/rest@^19.0.7":
   version "19.0.13"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-19.0.13.tgz#e799393264edc6d3c67eeda9e5bd7832dcf974e4"
   integrity sha512-/EzVox5V9gYGdbAI+ovYj3nXQT1TtTHRT+0eZPcuC05UFSWO3mdO9UY1C0i2eLF9Un1ONJkAk+IEtYGAC+TahA==
@@ -4132,11 +4132,6 @@
   resolved "https://registry.yarnpkg.com/@tailwindcss/container-queries/-/container-queries-0.1.1.tgz#9a759ce2cb8736a4c6a0cb93aeb740573a731974"
   integrity sha512-p18dswChx6WnTSaJCSGx6lTmrGzNNvm2FtXmiO6AuA1V4U5REyoqwmT6kgAsIMdjo07QdAfYXHJ4hnMtfHzWgA==
 
-"@tailwindcss/line-clamp@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.4.4.tgz#767cf8e5d528a5d90c9740ca66eb079f5e87d423"
-  integrity sha512-5U6SY5z8N42VtrCrKlsTAA35gy2VSyYtHWCsg1H87NU1SXnEfekTVlrga9fzUDrrHcGi2Lb5KenUWb4lRQT5/g==
-
 "@tailwindcss/typography@^0.5.15", "@tailwindcss/typography@^0.5.8":
   version "0.5.15"
   resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.15.tgz#007ab9870c86082a1c76e5b3feda9392c7c8d648"
@@ -4180,14 +4175,14 @@
     typescript "^5.6.2"
     zod "^3.23.8"
 
-"@tinacms/auth@^1.0.4":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@tinacms/auth/-/auth-1.0.6.tgz#7acc6e1e935db43b796605e32fc62ba773a3561c"
-  integrity sha512-1GcSkQo8MgZNt+b/TVZx06YhvyJ6nhCvRCDD/EGzBRDOoAqTFiw5g6zrf+acjRkSEUyt9moTtxBotW+DHLNVyw==
+"@tinacms/auth@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@tinacms/auth/-/auth-1.0.8.tgz#0c4dcd402e8253e1d31ea08892b510b3d83d5f55"
+  integrity sha512-o7OYuTSmcYHXsVK1rY30lujMNq5GaUklYI8sbboSWI/KI2PdnAgei0ZihTOlLYHD28gHwHu8WKxeXo5olwj4Mg==
   dependencies:
     fetch-ponyfill "^7.1.0"
 
-"@tinacms/cli@^1.6.11":
+"@tinacms/cli@^1.5.53":
   version "1.6.11"
   resolved "https://registry.yarnpkg.com/@tinacms/cli/-/cli-1.6.11.tgz#948593182eb43ed7f048ed4bf83ed71cd9f1c852"
   integrity sha512-0ADXkVbsblyiQ7U28HvRBVro1Edxr20WGOFMJgA+xA7U044DQWevCE8DmpbHISccqprrqQXIDR7e3hiAXgImag==
@@ -4243,7 +4238,7 @@
     yup "^1.4.0"
     zod "^3.23.8"
 
-"@tinacms/datalayer@^1.3.7":
+"@tinacms/datalayer@^1.2.40":
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/@tinacms/datalayer/-/datalayer-1.3.7.tgz#4e0471a33f7868b53ca37345543f6d9582490cf6"
   integrity sha512-EFxPkarGctB+LAVOsBZS58UwGXovPcNlToqCMf7K1E2AkBH/8wGXAFUGhLCQwF+VYSDuEhUSjQBDQhU+7cUXZw==
@@ -7769,7 +7764,7 @@ jotai@^2.7.1:
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.10.1.tgz#8d5598d06fa295110de0914f10bd1d10ea229723"
   integrity sha512-4FycO+BOTl2auLyF2Chvi6KTDqdsdDDtpaL/WHQMs8f3KS1E3loiUShQzAzFA/sMU5cJ0hz/RT1xum9YbG/zaA==
 
-js-base64@^3.7.7:
+js-base64@^3.7.4:
   version "3.7.7"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.7.tgz#e51b84bf78fbf5702b9541e2cb7bfcb893b43e79"
   integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
@@ -10944,14 +10939,14 @@ tinacms-authjs@^2.0.1:
   dependencies:
     "@tinacms/schema-tools" "1.4.15"
 
-tinacms-gitprovider-github@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-2.0.7.tgz#81bed1070538d44d33597ae31c509c3e052a6cb0"
-  integrity sha512-CH8WlARtSjy7xHr77s/3YR1+2MFQspcWEzoH7fLrIoGld5ry2/+au6AAK9B01cGTUFPVhPjmDvSyRBp14v2BjA==
+tinacms-gitprovider-github@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/tinacms-gitprovider-github/-/tinacms-gitprovider-github-1.0.11.tgz#ff99cec095c2cac84f60b3a8405ecdbb988a8906"
+  integrity sha512-a0unwIj/t0tgifXNLpVIerpFTtxaypnHd7+R39+OnUwZCgegeXwnnRqQK+lNDi6zr+drIbWmT2LUNQqradOOrg==
   dependencies:
-    "@octokit/rest" "^19.0.13"
-    js-base64 "^3.7.7"
-    typescript "^5.6.2"
+    "@octokit/rest" "^19.0.7"
+    js-base64 "^3.7.4"
+    typescript "4.7.4"
 
 tinacms@2.4.0, tinacms@^2.1.1:
   version "2.4.0"
@@ -11199,6 +11194,11 @@ typedoc@^0.26.7:
     minimatch "^9.0.5"
     shiki "^1.16.2"
     yaml "^2.5.1"
+
+typescript@4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 typescript@^4.5.2:
   version "4.9.5"
