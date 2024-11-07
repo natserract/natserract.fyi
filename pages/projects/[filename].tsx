@@ -2,6 +2,7 @@ import { client } from "../../tina/__generated__/client";
 import { useTina } from "tinacms/dist/react";
 import { Layout } from "../../components/layout";
 import { InferGetStaticPropsType } from "next";
+import { Project } from "../../components/projects/project";
 
 export default function ProjectPage(
   props: InferGetStaticPropsType<typeof getStaticProps>,
@@ -14,7 +15,7 @@ export default function ProjectPage(
 
   return (
     <Layout>
-      {JSON.stringify(data, null, 2)}
+      <Project {...data.project} />
     </Layout>
   );
 }

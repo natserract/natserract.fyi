@@ -43,6 +43,20 @@ const Project: Collection = {
       name: "external",
     },
     {
+      type: "datetime",
+      label: "Posted Date",
+      name: "date",
+      ui: {
+        dateFormat: "MMMM DD YYYY",
+        timeFormat: "hh:mm A",
+      },
+    },
+    {
+      type: "string",
+      label: "Category",
+      name: "category",
+    },
+    {
       type: "rich-text",
       label: "Body",
       name: "_body",
@@ -77,37 +91,21 @@ const Project: Collection = {
           ],
         },
         {
-          name: "NewsletterSignup",
-          label: "Newsletter Sign Up",
+          name: "video",
+          label: "Video",
           fields: [
             {
-              name: "children",
-              label: "CTA",
-              type: "rich-text",
-            },
-            {
-              name: "placeholder",
-              label: "Placeholder",
               type: "string",
+              label: "Src",
+              name: "src",
             },
             {
-              name: "buttonText",
-              label: "Button Text",
               type: "string",
+              label: "Poster",
+              name: "poster",
             },
-            {
-              name: "disclaimer",
-              label: "Disclaimer",
-              type: "rich-text",
-            },
-          ],
-          ui: {
-            defaultItem: {
-              placeholder: "Enter your email",
-              buttonText: "Notify Me",
-            },
-          },
-        },
+          ]
+        }
       ],
       isBody: true,
     },

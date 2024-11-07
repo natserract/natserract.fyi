@@ -27,6 +27,8 @@ query pageQuery {
                 description
                 cover
                 external
+                date
+                category
 
                  _sys {
                     filename
