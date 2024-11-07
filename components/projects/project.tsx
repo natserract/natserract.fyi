@@ -5,7 +5,7 @@ import format from "date-fns/format";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { Prism } from "tinacms/dist/rich-text/prism";
 import type { TinaMarkdownContent, Components } from "tinacms/dist/rich-text";
-import { PostType } from "../../pages/posts/[filename]";
+import { ProjectType } from "../../pages/projects/[filename]";
 import { tinaField } from "tinacms/dist/react";
 import Link from "next/link";
 
@@ -17,15 +17,13 @@ const components: Components<{
   DateTime: {
     format?: string;
   };
-  NewsletterSignup: {
-    placeholder: string;
-    buttonText: string;
-    children: TinaMarkdownContent;
-    disclaimer?: TinaMarkdownContent;
-  };
   Delete: {
     text: string;
   };
+  video: {
+    src: string
+    poster: string
+  }
 }> = {
   code_block: (props) => <Prism {...props} />,
   BlockQuote: (props: {
@@ -60,47 +58,9 @@ const components: Components<{
         return <span>{format(dt, "P")}</span>;
     }
   },
-  NewsletterSignup: (props) => {
-    return (
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className="">
-            <TinaMarkdown content={props.children} />
-          </div>
-          <div className="mt-8 ">
-            <form className="sm:flex">
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email-address"
-                type="email"
-                autoComplete="email"
-                required
-                className="w-full px-5 py-3 border border-gray-300 shadow-sm placeholder-gray-400 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs rounded-md"
-                placeholder={props.placeholder}
-              />
-              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center py-3 px-5 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                >
-                  {props.buttonText}
-                </button>
-              </div>
-            </form>
-            <div className="mt-3 text-sm text-gray-500">
-              {props.disclaimer && <TinaMarkdown content={props.disclaimer} />}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  },
   img: (props) => (
     <span className="flex items-center justify-center">
-      <img src={props.url} alt={props.alt} />
+      <img src={props.url} alt={props.alt} className='!my-3 w-full' />
     </span>
   ),
   a: (props) => (
@@ -111,9 +71,12 @@ const components: Components<{
       {props.children}
     </a>
   ),
+  video: (props) => (
+    <video src={props.src} controls poster={props.poster} style={{ width: '100%', height: '500px' }}/>
+  )
 };
 
-export const Post = (props: PostType) => {
+export const Project = (props: ProjectType) => {
   const theme = useTheme();
   const titleColorClasses = {
     blue: "from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-500",
@@ -167,15 +130,6 @@ export const Post = (props: PostType) => {
         </h2>
       </div>
 
-      <div data-tina-field={tinaField(props, "author")}>
-        <p
-          data-tina-field={tinaField(props, "date")}
-          className="text-xs text-gray-400 whitespace-nowrap group-hover:text-gray-500 dark:text-gray-300 dark:group-hover:text-gray-150 pb-5"
-        >
-          Published: {formattedDate}
-        </p>
-      </div>
-
       <div className={`flex-1 !pt-0 !pb-10 sm:!pb-24`}>
         <article
           data-tina-field={tinaField(props, "_body")}
@@ -189,8 +143,8 @@ export const Post = (props: PostType) => {
             Back to Top
           </button>
           <span className="block text-gray-400 text-xs">/</span>
-          <Link href="/posts" className="hover:underline text-xs">
-            Posts
+          <Link href="/projects" className="hover:underline text-xs">
+            Projects
           </Link>
         </div>
       </div>

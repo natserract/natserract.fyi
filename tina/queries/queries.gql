@@ -19,6 +19,24 @@ query pageQuery {
         }
     }
 
+    projectConnection {
+        edges {
+            node {
+                id
+                title
+                description
+                cover
+                external
+                date
+                category
+
+                 _sys {
+                    filename
+                }
+            }
+        }
+    }
+
     noteConnection {
         edges {
             node {
@@ -53,6 +71,13 @@ query blogPostQuery($relativePath: String!) {
                 avatar
             }
         }
+    }
+}
+
+query projectQuery($relativePath: String!) {
+    ...LayoutQueryFragment
+    project(relativePath: $relativePath) {
+        ...ProjectParts
     }
 }
 
