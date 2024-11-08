@@ -27,14 +27,14 @@ if (Astro.url.pathname == "/") {
     }
 }
 
-const description = pageDescription ? `${pageDescription} - ${SITE_DESCRIPTION}` : `${SITE_DESCRIPTION}`;
+const description = SITE_DESCRIPTION
 const image = "og.jpg"
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
 <meta name="generator" content={Astro.generator}/>
 
 <GoogleFontsOptimizer
@@ -56,6 +56,8 @@ const image = "og.jpg"
 <meta property="og:title" content={title}/>
 <meta property="og:description" content={description}/>
 <meta property="og:image" content={new URL(image, Astro.url)}/>
+<meta property="og:site_name" content={SITE_TITLE}/>
+
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image"/>
