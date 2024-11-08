@@ -33,8 +33,8 @@ const currentYear = currentDate.getFullYear();
 
         <div class="hidden sm:block">
           <ul class="sm:flex md:block sm:flex-row">
-            {NAVS.map((item, i) => {
-              const isActive = item.href === pathname || item.href === pathname.replace(/\/$/, "");
+            {NAVS.map((item) => {
+              const isActive = item.href === pathname || item.href === pathname.replace(/\/$/, "") || pathname.startsWith("/posts") && item.href === "/";
 
               return (
                 <li>

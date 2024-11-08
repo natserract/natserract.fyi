@@ -1,0 +1,187 @@
+---
+title: Use Window Functions Instead of GroupBy
+excerpt: >
+  Window function is actually quite similar like `groupBy`, but I think it’s
+  more powerful and flexible. It’s purpose to group a set of data and apply
+  aggregate operations, such as `AVG`, `MAX`, etc.
+author: content/authors/natserract.md
+date: 2023-08-14T16:00:00.000Z
+---
+
+Window function is actually quite similar like `groupBy`, but I think it’s more powerful and flexible. It’s purpose to group a set of data and apply aggregate operations, such as `AVG`, `MAX`, etc.
+
+> Based on the results, the difference of window functions operation is evaluated in each row of data, while groupBy evaluated become one row of results.
+
+### Group By:
+
+```sql
+λ> select
+  a.id as "ID",
+  a.code as "Code",
+  count(a.id) as "Count"
+from order_items oi
+inner join assets a on a.id = oi."assetId"
+group by a.id
+
++-------------------------------+
+| ID  |   Code     |   Count  |
++-------------------------------+
+| 15  |  1231212   |    2     |
+| 19  |  12341928  |    2     |
++-----+-------------------------+
+```
+
+> Group By **Asset Id**
+
+### Window Functions
+
+```sql
+λ> select
+  a.id as "ID",
+  a.code as "Code",
+  count(a.id) OVER(partition by oi."assetId") as "Count"
+from order_items oi
+inner join assets a on a.id = oi."assetId"
+
++-------------------------------+
+| ID  |   Code     |   Count  |
++-------------------------------+
+| 15  |  1231212   |    2     |
+| 15  |  1231212   |    2     |
+| 19  |  12341928  |    2     |
+| 19  |  12341928  |    2     |
++-----+-------------------------+
+```
+
+Inside window functions, as you can see the operations is performed without the `GROUP BY` clause. But, the interesting parts is in this section:
+
+```sql
+count(a.id) OVER(partition by oi."assetId") as "Count"
+```
+
+### Agregate function
+
+It’s called window functions, because of the aggregate functions is operated with the `OVER` clause.
+
+- **The pattern look like this:**
+
+```sql
+<function_name>(<argument(s)>) OVER(PARTITION BY <column(s)> ORDER BY <column(s)>) <alias>
+```
+
+### Over Clause
+
+Over clause, defines the size of window you want to create. Example:
+
+- `OVER()` if the parameter’s empty, then the partition is created based on the calculations of the whole data. If referring to the case above:
+
+```sql
+  λ> select
+    ...
+    count(a.id) OVER() as "Count"
+    ...
+
+  +-------------------------------+
+  | ID  |   Code     |   Count  |
+  +-------------------------------+
+  | 15  |  1231212   |    4     |
+  | 15  |  1231212   |    4     |
+  | 19  |  12341928  |    4     |
+  | 19  |  12341928  |    4     |
+  +-----+-------------------------+
+```
+
+- **Create window partitions, based on grouping columns:**
+
+```sql
+count(a.id) OVER(partition by oi."assetId")
+```
+
+> So, in the case above, it means count based on the existing Asset Id , within Asset ID 15 with a total of 2, and Asset ID 19
+
+- **Create window + sorting partitions:**
+
+```sql
+λ> select
+...
+oi.price as "Price",
+oi.id as "Item ID",
+...
+DENSE_RANK() OVER(partition by oi."assetId" order by oi.price desc) as "Rank"
+...
+
++---------------------------------+------------+---------------+
+| ID  |   Code     |    Price     |    Item ID    |    Rank
++---------------------------------+------------+---------------+
+| 15  |  1231212   |    200000    |      303     |      1      |
+| 15  |  1231212   |    100000    |      302     |      2      |
+| 19  |  12341928  |    813984    |      301     |      1      |
+| 19  |  12341928  |    813984    |      304     |      1      |
++-----+---------------------------+------------+---------------+
+```
+
+> `DENSE_RANK()` is used to view rank by largest price in order
+
+### Why Window Functions
+
+So far I think, `GROUP BY` is less flexible for query operations that require data from other tables:
+
+```sql
+λ> select
+oi.price, -- non agregate
+sum(oi.price) -- agregate,
+...
+...
+from order_items oi
+inner join assets a on a.id = oi."assetId"
+inner join asset_events ae on ae."assetId" = a.id
+...
+group by 1, ... ? ..?
+--
+-- Error:
+-- column "oi.price"  must appear in the GROUP BY clause
+-- or be used in an aggregate function
+```
+
+The problem’s, I have to define group by value above per each non aggregate data that will be shown, besides that the result might not be valid. Maybe there’s another way and approach with group by, but it seems more complex.
+
+Well, that’s why window function can solve the complexity problem above. Just by adding:
+
+```sql
+λ> select
+   a.id as "ID",
+   a.code as "Code",
+   oi.price,
+   count(a.id) OVER(partition by oi."assetId") as "Count",
+   sum(oi.price) OVER(partition by oi."assetId") as "Total"
+from order_items oi
+    inner join assets a on a.id = oi."assetId"
+```
+
+> TIPS: If the problem statement does not require combining both aggregated and non-aggregated columns in a single query, then your best approach is to use a `GROUP BY` clause instead.
+
+### CTE + Window Functions + Sub Query
+
+In this case, get last asset events of each asset booked by the customer
+
+```sql
+with latest_asset_events as (
+ select *,
+ 	DENSE_RANK() OVER(PARTITION BY ae."assetId" order by ae."createdAt" desc) AS rank
+   from asset_events ae
+) select * from latest_asset_events lae
+where lae."assetId" in (
+  select a.id
+  from orders o
+     inner join order_items oi on oi."orderId" = o.id
+     inner join assets a on a.id = oi."assetId"
+)
+and rank=1
+```
+
+> `rank=1` is used to get first rank from latest asset event date `order by ae."createdAt" desc`
+
+### Additional reading:
+
+- SQL Window Functions performance [https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf](https://selectfrom.dev/sql-performance-of-window-functions-vs-subqueries-on-big-data-3fa533fc64bf)
+- [https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/](https://coderpad.io/blog/development/window-functions-aggregate-data-postgres/)

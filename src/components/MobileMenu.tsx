@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { NAVS } from "@/consts.ts";
 import { createPortal } from "react-dom";
 
@@ -87,7 +87,9 @@ function MobileMenuContent({
       <nav className="m-auto flex flex-col items-center pt-5" ref={ref}>
         {NAVS.map((item, i) => {
           const isActive =
-            item.href === pathname || item.href === pathname.replace(/\/$/, "");
+            item.href === pathname ||
+            item.href === pathname.replace(/\/$/, "") ||
+            (pathname.startsWith("/posts") && item.href === "/");
 
           return (
             <a

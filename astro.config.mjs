@@ -12,6 +12,10 @@ const site = "https://engineering-natserract.vercel.app";
 // https://astro.build/config
 export default defineConfig({
   site,
-  trailingSlash: "always",
   integrations: [mdx(), sitemap(), tailwind(), react()],
+  markdown: {
+    shikiConfig: {
+      theme: "github-light",
+    },
+  },
 });
