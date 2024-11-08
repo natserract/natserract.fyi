@@ -14,7 +14,7 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const {title: pageTitle, description: pageDescription} = Astro.props;
+const {title: pageTitle, description = SITE_DESCRIPTION, image = "og.jpeg"} = Astro.props;
 
 let title = pageTitle;
 if (Astro.url.pathname == "/") {
@@ -26,9 +26,6 @@ if (Astro.url.pathname == "/") {
         title = `${SITE_TITLE}. ${SITE_DESCRIPTION}`
     }
 }
-
-const description = SITE_DESCRIPTION
-const image = "og.jpg"
 ---
 
 <!-- Global Metadata -->
