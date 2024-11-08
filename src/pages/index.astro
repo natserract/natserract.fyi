@@ -1,0 +1,125 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+import Layout from "@layouts/Layout.astro";
+import OssActivities from "@components/home/OssActivities.astro";
+
+const posts = (await getCollection("post")).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<Layout>
+  <div class="leading-6">
+    <div class="mb-7 text-sm font-lato">
+      <h3 class="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond pb-2">
+        About
+      </h3>
+      <Image
+        alt="cover"
+        src="https://res.cloudinary.com/dqo6txtrv/image/upload/v1716569680/Natserract%20Blog/edited_ghkbfw.jpg"
+        width="100"
+        height="150"
+        sizes="100vw"
+        style={{
+          width: "100%",
+          height: "150px",
+          objectFit: "cover",
+          objectPosition: "center"
+        }}
+        class="mb-5 block"
+      />
+      <p class="mb-2">
+        My name is <b>Alfin Surya</b>. I'm a software engineer
+      </p>
+      <p class="mb-2">
+        I am mostly self-taught, and I teach myself whatever topic interests
+        me. Most of the times{" "}
+        <a
+          class="underline hover:text-blue-600"
+          href="https://www.vice.com/en/article/53dpeq/in-defense-of-learning-code-the-hard-way"
+        >
+          learn things from the hard way
+        </a>
+        , I mainly work with JavaScript/TypeScript, Python, and Elixir. I've
+        been involves in fullstack development, AI, and functional
+        programming. Currently open to collaboration, discussion and remote
+        work.
+      </p>
+      <p class="mt-5 mb-2">
+        <strong class="font-bold">Area of interest:</strong>
+      </p>
+      <p class="mb-2">
+        DX(developer experience), Software Architecture, Programming Language,
+        Remote Working, much more.
+      </p>
+      <blockquote class="mt-5 bg-[#f8f9fa] p-2 border border-[#a2a9b1]">
+        <em class="block">
+          There are no solutions. There are only trade-offs. And you try to
+          get the best trade-off you can get.
+        </em>
+        <em class="block">That’s all you can hope for. -Thomas Sowell</em>
+      </blockquote>
+
+      <div class="flex flex-row text-xs items-center gap-2 mt-5">
+        Contact:
+        <ul class="list-none flex flex-row gap-2">
+          <li>
+            <a
+              class="inline-block opacity-80 underline grayscale transition ease-out duration-150"
+              href="https://github.com/natserract"
+              target="_blank"
+            >
+              Github
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="inline-block opacity-80 underline grayscale transition ease-out duration-150"
+              href="https://www.linkedin.com/in/alfinsurya/"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="inline-block opacity-80 underline grayscale transition ease-out duration-150"
+              href="mailto:alfins132@gmail.com"
+              target="_blank"
+            >
+              Mail
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <OssActivities />
+
+    <div>
+      <h3 class="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond pb-2">
+        All Posts
+      </h3>
+      <ul class="list-disc ml-5">
+        {posts.map((post) => (
+          <li class="last:mb-0 mb-1">
+            <a
+              href={`/posts/${post.slug}`}
+              class="group block transition-all duration-150 ease-out"
+            >
+              <h2
+                class={`text-sail-500 dark:text-white font-semibold text-sm transition-all hover:underline duration-150 ease-out `}
+              >
+                {post.data.title}{" "}
+              </h2>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Layout>

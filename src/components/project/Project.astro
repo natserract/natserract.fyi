@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+type Props = CollectionEntry<"project">
+
+const { data, slug } = Astro.props;
+---
+
+<a href={data.external ? data.external : `/projects/${slug}`}
+   class="relative block transition ease-curve-a duration-250 border border-gray-300 bg-[#f5faff] w-full max-w-[25rem] h-full hover:text-sail-500 !bg-none !p-0"
+   target={data.external ? "_blank" : "_self"}
+>
+  <div class="h-full max-h-[6rem] relative">
+    <Image src={data.cover ? data.cover : "/uploads/placeholder.jpg"}
+           style={{ objectFit: "cover", objectPosition: "center", width: "100%", height: "100%" }} width={419}
+           height={219} alt="project" />
+  </div>
+  <div
+    class="relative leading-snug text-balance pointer-events-none select-none py-3 px-3 border-t-2 border-sail-200 ">
+    <h3 class="text-lg font-semibold font-eb-garamond text-sail-500">{data.title}{" "}</h3>
+    <p class="text-xs mt-2 line-clamp-3">{data.description}</p>
+    <div class="relative pt-6">
+          <span
+            class="text-[10px] text-muted text-gray-300 block pt-3 absolute bottom-0 left-0">{data?.category ? data.category : "Site"}</span>
+    </div>
+  </div>
+</a>
