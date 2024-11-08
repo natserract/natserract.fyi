@@ -9,11 +9,9 @@ import react from "@astrojs/react";
 
 import vercel from "@astrojs/vercel/serverless";
 
-const site = "https://natserract-fyi.vercel.app";
-
 // https://astro.build/config
 export default defineConfig({
-    site,
+    root: "./src",
     integrations: [mdx(), sitemap(), tailwind(), react()],
 
     markdown: {
