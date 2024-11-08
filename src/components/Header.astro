@@ -12,7 +12,7 @@ const currentYear = currentDate.getFullYear();
   <div class="relative z-10 w-full px-0 py-1 md:py-0 md:h-[100vh]">
     <div class="flex md:flex-col items-center justify-between md:items-start md:justify-normal gap-6">
       <h4
-        class="select-none text-3xl text-gray-800 font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
+        class="select-none text-3xl font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
         <a
           href="/"
           class="flex gap-1 items-center whitespace-nowrap tracking-[.002em] hover:text-[--gray-dark]"
@@ -40,7 +40,7 @@ const currentYear = currentDate.getFullYear();
                 <li>
                   <a
                     href={`${item.href}`}
-                    class={`relative text-gray-800 select-none w-full text-xs inline-block hover:underline transition duration-150 ease-out hover:opacity-100 py-2 px-6 ${
+                    class={`relative select-none w-full text-xs inline-block hover:underline transition duration-150 ease-out hover:opacity-100 py-2 px-6 ${
                       isActive ? `text-sail-500 underline` : ``
                     }`}
                   >

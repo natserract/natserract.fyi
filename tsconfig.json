@@ -17,6 +17,9 @@
       ],
       "@util/*": [
         "src/util/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
       ]
     },
     "plugins": [

@@ -41,7 +41,7 @@ body {
     background-size: 100% 600px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    color: rgb(var(--gray-dark));
+    color: rgb(54, 49, 69);
     font-size: 20px;
     line-height: 1.7;
 }
@@ -60,7 +60,6 @@ h4,
 h5,
 h6 {
     margin: 0 0 0.5rem 0;
-    color: rgb(var(--black));
     line-height: 1.2;
 }
 
@@ -92,7 +91,6 @@ b {
 a:hover {
     color: #1694e1;
 }
-
 
 textarea {
     width: 100%;

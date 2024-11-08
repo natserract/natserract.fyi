@@ -1,0 +1,39 @@
+---
+title: Semaphores
+date: 2024-05-27T16:00:00.000Z
+keywords: thread locking, concurrent, concurrency
+---
+
+Semaphore is a technique by which concurrent processes or operations are managed using an integer value. It takes care of concurrent operations made to the common resources across multiple threads to achieve process synchronization.
+
+Semaphore keeps track of how many permits are available to access a particular resource in according to avoid race conditions. These permits are acquired before accessing and become free when the operation is completed. If a permit can't be acquired (i.e. no permits available), it waits until the permit to access the resource is available. Semaphore serves requests on the basis of FIFO (First in, First out).
+
+### Semaphores Concepts
+
+Since all threads run in the same address space, they all have access to the same data and variables. If two threads simultaneously attempt to update a global counter variable, it is possible for their operations to interleave in such way that the global state is not correctly modified. Although such a case may only arise only one time out of thousands, a concurrent program needs to coordinate the activities of multiple threads using something more reliable that just depending on the fact that such interference is rare. The semaphore is designed for just this purpose.
+
+A semaphore is somewhat like an integer variable, but is special in that its operations (increment and decrement) are guaranteed to be atomic—you cannot be halfway through incrementing the semaphore and be interrupted and waylaid by another thread trying to do the same thing. That means you can increment and decrement the semaphore from multiple threads without interference. By convention, when a semaphore is zero it is "locked" or "in use". Otherwise, positive values indicate that the semaphore is available. A semaphore will never have a negative value.
+
+Semaphores are also specifically designed to support an efficient waiting mechanism. If a thread can’t proceed until some change occurs, it is undesirable for that thread to be looping and repeatedly checking the state until it changes. In this case semaphore can be used to represent the right of a thread to proceed. A non-zero value means the thread should continue, zero means to hold off. When a thread attempts to decrement a unavailable semaphore (with a zero value), it efficiently waits until another thread increments the semaphore to signal the state change that will allow it to proceed.
+
+### How it works
+```tsx
+for (let attempt = 0; ; attempt++) {
+    try {
+        return (await this.client.createInvoice(data)) as CreateInvoiceResponse
+    } catch (err) {
+        if (attempt < 3) {
+            continue
+        } else {
+            throw err
+        }
+    }
+}
+
+// The line is here: for (let attempt = 0; ; attempt++) {..}
+```
+
+### Semaphore Tools (NodeJS)
+
+* [https://github.com/vercel/async-sema](https://github.com/vercel/async-sema)
+* [https://github.com/DirtyHairy/async-mutex](https://github.com/DirtyHairy/async-mutex)
