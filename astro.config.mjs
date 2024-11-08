@@ -7,9 +7,9 @@ import tailwind from "@astrojs/tailwind";
 
 import react from "@astrojs/react";
 
-import vercel from "@astrojs/vercel/serverless";
+import vercel from '@astrojs/vercel/static';
 
-const site = "https://natserract-fyi.vercel.app/";
+const site = "https://natserract-fyi.vercel.app";
 
 // https://astro.build/config
 export default defineConfig({
