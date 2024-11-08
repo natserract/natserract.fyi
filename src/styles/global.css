@@ -172,28 +172,6 @@ hr {
     border-top: 1px solid rgb(var(--gray-light));
 }
 
-a[target="_blank"]:not(.external-link) {
-    background-position: center right;
-    background-repeat: no-repeat;
-    background-image: url("/external-link-ltr-icon.png");
-    padding-right: 13px;
-}
-
-a[target="_blank"].external-link {
-    position: relative;
-}
-
-a[target="_blank"].external-link:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    background-position: center right;
-    background-repeat: no-repeat;
-    background-image: url("/external-link-ltr-icon.png");
-}
-
 .sr-only {
     border: 0;
     padding: 0;

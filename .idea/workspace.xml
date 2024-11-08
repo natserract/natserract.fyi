@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6f0db839-0c2f-4252-8839-8e60135fced6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astro.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/astro.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BaseHead.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseHead.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/consts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/post/a-tour-of-goroutines.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/post/a-tour-of-goroutines.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +97,7 @@
       <workItem from="1731025898931" duration="5202000" />
       <workItem from="1731031126245" duration="64000" />
       <workItem from="1731031201412" duration="41318000" />
-      <workItem from="1731080053905" duration="2341000" />
+      <workItem from="1731080053905" duration="3308000" />
     </task>
     <servers />
   </component>
