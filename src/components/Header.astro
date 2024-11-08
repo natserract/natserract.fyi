@@ -1,6 +1,7 @@
 ---
 import { TITLE, NAVS } from "@/consts";
 import MobileMenu from "@components/MobileMenu";
+import { isActivePage } from "@util/route";
 
 const { pathname } = Astro.url;
 
@@ -15,7 +16,7 @@ const currentYear = currentDate.getFullYear();
         class="select-none text-3xl font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
         <a
           href="/"
-          class="flex gap-1 items-center whitespace-nowrap tracking-[.002em] hover:text-[--gray-dark]"
+          class="flex gap-1 items-center whitespace-nowrap tracking-[.002em] text-gray-800 hover:text-[--gray-dark]"
         >
             <span
               class="block font-eb-garamond font-bold"
@@ -34,7 +35,7 @@ const currentYear = currentDate.getFullYear();
         <div class="hidden sm:block">
           <ul class="sm:flex md:block sm:flex-row">
             {NAVS.map((item) => {
-              const isActive = item.href === pathname || item.href === pathname.replace(/\/$/, "") || pathname.startsWith("/posts") && item.href === "/";
+              const isActive = isActivePage(pathname, item.href);
 
               return (
                 <li>

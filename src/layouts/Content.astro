@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+
 import { THEME_COLOR } from "@util/style";
 import BackToTop from "@components/BackToTop";
 
@@ -13,7 +14,7 @@ const { title, date, of: Component } = Astro.props;
 
 <div class="flex-1">
   <div
-    class={`flex-1 pb-2 mb-5 md:mb-8 border-b-0 md:border-b border-gray-250`}
+    class={`flex-1 pb-2 mb-5 md:mb-8 border-b border-gray-250`}
   >
     <h1
       class={`w-full font-eb-garamond relative text-4xl title-font font-extrabold tracking-normal leading-snug`}

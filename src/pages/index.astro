@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
+
 import Layout from "@layouts/Layout.astro";
 import OssActivities from "@components/OssActivities.astro";
 
@@ -23,7 +24,7 @@ const posts = (await getCollection("post")).sort(
         sizes="100vw"
         style={{
           width: "100%",
-          height: 150,
+          height: "150px",
           objectFit: "cover",
           objectPosition: "center"
         }}
@@ -111,7 +112,7 @@ const posts = (await getCollection("post")).sort(
               class="group block transition-all duration-150 ease-out"
             >
               <h2
-                class={`text-sail-500 dark:text-white font-semibold text-sm transition-all hover:underline duration-150 ease-out`}
+                class={`text-sail-500 dark:text-white font-semibold text-sm transition-all hover:underline duration-150 ease-out `}
               >
                 {post.data.title}{" "}
               </h2>

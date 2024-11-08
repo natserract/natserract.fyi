@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { NAVS } from "@/consts.ts";
 import { createPortal } from "react-dom";
+
+import { NAVS } from "@/consts.ts";
+import { isActivePage } from "@util/route";
 
 export default function MobileMenu({ pathname }: { pathname: string }) {
   const [open, setOpen] = useState(false);
@@ -83,18 +85,15 @@ function MobileMenuContent({
   const ref = useRef<HTMLElement | null>(null);
 
   return createPortal(
-    <div className="absolute bg-wild-sand-50 z-[100] max-h-[250px] top-[74px] left-0 right-0 bottom-0 ">
+    <div className="absolute bg-wild-sand-50 z-[100] max-h-[250px] top-[77px] left-0 right-0 bottom-0 ">
       <nav className="m-auto flex flex-col items-center pt-5" ref={ref}>
         {NAVS.map((item, i) => {
-          const isActive =
-            item.href === pathname ||
-            item.href === pathname.replace(/\/$/, "") ||
-            (pathname.startsWith("/posts") && item.href === "/");
+          const isActive = isActivePage(pathname, item.href);
 
           return (
             <a
               key={i}
-              href={`/${item.href}`}
+              href={`${item.href}`}
               className={`relative select-none text-xs inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 hover:underline py-3 px-4 ${
                 isActive ? `` : `opacity-70`
               }`}

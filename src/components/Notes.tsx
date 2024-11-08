@@ -1,6 +1,6 @@
 import { Virtuoso } from "react-virtuoso";
 import React, { forwardRef, memo, useCallback, useMemo, useState } from "react";
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 
 import { filterOptions } from "@util/filter.ts";
 import { useDebounce } from "@hooks/useDebounce.ts";
@@ -35,7 +35,7 @@ export const Notes = ({ data }: { data: Note[] }) => {
 
   return (
     <div className="min-h-screen">
-      <h3 className="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond">
+      <h3 className="text-2xl font-bold mb-5 border-b pb-2 border-gray-250 font-eb-garamond">
         Shared Notes
       </h3>
 
