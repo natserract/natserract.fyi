@@ -1,0 +1,58 @@
+---
+title: Sigi Tour Transport
+description: Sigi Tour transport is an online bus ticket booking application. Customers can order tickets and make payments in one application.
+cover: https://res.cloudinary.com/dqo6txtrv/image/upload/v1730951798/Natserract%20Blog/projects/sigitourtransport_ro7psu.png
+date: 2023-09-06
+category: Application
+---
+
+![Sigi Tour flow](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730960777/Natserract%20Blog/projects/sigitour_flow_c7alfe.png)
+
+## Overview
+Sigi Tour transport is an online bus ticket booking application. Customers can order tickets and make payments in one application.
+
+![Sigi Tour Demo](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730962411/Natserract%20Blog/projects/sigitour_te9jx0.png)
+![Sigi Tour Demo2](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730963037/Natserract%20Blog/projects/Find_Bus_Route_h2pskn.jpg)
+![Sigi Tour Demo3](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730963088/Natserract%20Blog/projects/Bus_fvbh6m.jpg)
+![Sigi Tour Demo4](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730963037/Natserract%20Blog/projects/Checkout_Page_oswjoe.jpg)
+![Sigi Tour Demo5](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730963036/Natserract%20Blog/projects/Change_Profile_o96mfj.jpg)
+
+This application is made as an intermediary between **Bus Agents** and **Customers**. Each bus agent has its own type of bus provider.
+
+For example: Bus Agency - John Doe.
+
+John doe is registered with the bus provider:
+1. [Gunung Harta](https://gunungharta.com/)
+2. [MTrans](https://www.mtrans.co.id/)
+3. [Surya Trans](https://www.instagram.com/suryatransmalang/)
+
+> Note: Agent registration must be done at the branch office manually. Not through the app
+
+### Problems
+The problem to be solved in this application is the main goal to unify all bus providers into 1 independent application based on the ownership of the Bus Agent ([unified APIs](https://www.apideck.com/blog/what-is-a-unified-api)).
+
+### Challenges
+1. Each bus provider has different APIs, such as: Model, Source, etc.
+![Schema](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730961680/Natserract%20Blog/projects/sigi_different_schema_copy_u6wt6c.jpg)
+
+2. Synchronize/Matching each bus provider's scheme with our application scheme.
+![Schema 2](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730961201/Natserract%20Blog/projects/flow3_tgxiyp.png)
+![Schema 3](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730961201/Natserract%20Blog/projects/flow4_gnktdf.png)
+
+3. All the APIs of each provider are in the mobile app. So to get the right API and mechanism we need to extract/decompile their APK into readable code.
+
+4. Not all APKs were extracted successfully.
+
+5. Mobile First (PWA) - To get a mobile experience but all in one supporting all platforms. Plus with minimum budget
+
+6. Hard to test, especially when testing transactions, every test either succeeds or fails. We need to pay for the transaction.
+
+7. Race conditions problem when booking the same ticket simultaneously.
+
+### Deployment
+![Deployment](https://res.cloudinary.com/dqo6txtrv/image/upload/v1730960777/Natserract%20Blog/projects/sigitour_deployment_qd43jp.png)
+
+### Tech Stacks
+NextJS13, React Query, Multithread, Koa.js, PostgreSQL, Xendit, Zod, TypeScript, TurboRepo, PWA, Sequelize, Async Mutex, Android Development, Sentry
+
+> Demo: https://sigitour-git-master-functreescom.vercel.app

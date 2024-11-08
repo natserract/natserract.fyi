@@ -9,7 +9,7 @@ type Props = CollectionEntry<"post">["data"] & {
   of: AstroComponentFactory
 };
 
-const { title, date, of: Component } = Astro.props;
+const { title, of: Slot } = Astro.props;
 ---
 
 <div class="flex-1">
@@ -17,7 +17,7 @@ const { title, date, of: Component } = Astro.props;
     class={`flex-1 pb-2 mb-5 md:mb-8 border-b border-gray-250`}
   >
     <h1
-      class={`w-full font-eb-garamond relative text-4xl title-font font-extrabold tracking-normal leading-snug`}
+      class={`w-full font-eb-garamond relative text-3xl sm:text-4xl title-font font-extrabold tracking-normal leading-snug`}
     >
       <span
         class={`bg-clip-text text-transparent bg-gradient-to-r ${
@@ -32,7 +32,7 @@ const { title, date, of: Component } = Astro.props;
   <div class={`flex-1 !pt-0 !pb-10 sm:!pb-24`}>
     <article
       class="prose dark:prose-dark prose-md text-sm prose-h2:font-eb-garamond prose-h3:font-eb-garamond prose-h4:font-eb-garamond w-full max-w-none">
-      <Component />
+      <Slot />
     </article>
 
     <div class="flex flex-row items-center gap-2 mt-20">

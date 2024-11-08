@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
 import Layout from "@layouts/Layout.astro";
-import OssActivities from "@components/OssActivities.astro";
+import OssActivities from "@components/home/OssActivities.astro";
 
 const posts = (await getCollection("post")).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()

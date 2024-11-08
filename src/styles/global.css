@@ -140,6 +140,11 @@ code {
     margin-bottom: 1.6em;
 }
 
+.prose :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+.prose :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+    content: "" !important;
+}
+
 blockquote > p {
     font-size: 1rem !important;
     margin: 0 !important;
@@ -205,4 +210,9 @@ a[target="_blank"].external-link:after {
     clip-path: inset(50%);
     /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
     white-space: nowrap;
+}
+
+video {
+    width: 100%;
+    max-height: 500px;
 }

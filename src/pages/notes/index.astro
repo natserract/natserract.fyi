@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 
 import Layout from "@layouts/Layout.astro";
-import { Notes } from "@components/Notes";
+import { Notes } from "@components/notes/Notes";
 
 const notes = (await getCollection("note")).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
