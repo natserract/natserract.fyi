@@ -1,62 +1,66 @@
 ---
-import { TITLE, NAVS } from "@/consts";
+import {TITLE, NAVS} from "@/consts";
 import MobileMenu from "@components/MobileMenu";
-import { isActivePage } from "@util/route";
+import {isActivePage} from "@util/route";
 
-const { pathname } = Astro.url;
+const {pathname} = Astro.url;
 
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 ---
 
 <header class={`relative overflow-hidden h-full border-b md:border-b-0 border-sail-200`}>
-  <div class="relative z-10 w-full px-0 py-1 md:py-0 md:h-[100vh]">
-    <div class="flex md:flex-col items-center justify-between md:items-start md:justify-normal gap-6">
-      <h4
-        class="select-none text-3xl font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
-        <a
-          href="/"
-          class="flex gap-1 items-center whitespace-nowrap tracking-[.002em] text-gray-800 hover:text-[--gray-dark]"
-        >
+    <div class="relative z-10 w-full px-0 py-1 md:py-0 md:h-[100vh]">
+        <div class="flex md:flex-col items-center justify-between md:items-start md:justify-normal gap-6">
+            <h4
+                    class="select-none text-3xl font-bold tracking-tight mb-3 md:my-4 md:pt-3 px-6 transition duration-150 ease-out transform">
+                <a
+                        href="/"
+                        class="flex gap-1 items-center whitespace-nowrap tracking-[.002em] text-gray-800 hover:text-[--gray-dark]"
+                >
             <span
-              class="block font-eb-garamond font-bold"
+                    class="block font-eb-garamond font-bold"
             >
               {TITLE}
-              <i class="block font-normal font-public-sans text-[12px] not-italic">
+                <i class="block font-normal font-public-sans text-[12px] not-italic">
                 Personal and Research Notes
               </i>
             </span>
-        </a>
-      </h4>
+                </a>
+            </h4>
 
-      <div class="navigation-menu sm:flex sm:flex-row sm:items-center">
-        <MobileMenu client:load pathname={pathname} />
+            <div class="navigation-menu sm:flex sm:flex-row sm:items-center">
+                <MobileMenu client:load pathname={pathname}/>
 
-        <div class="hidden sm:block">
-          <ul class="sm:flex md:block sm:flex-row">
-            {NAVS.map((item) => {
-              const isActive = isActivePage(pathname, item.href);
+                <div class="hidden sm:block">
+                    <ul class="sm:flex md:block sm:flex-row">
+                        {NAVS.map((item) => {
+                            const isActive = isActivePage(pathname, item.href);
 
-              return (
-                <li>
-                  <a
-                    href={`${item.href}`}
-                    class={`relative select-none w-full text-xs inline-block hover:underline transition duration-150 ease-out hover:opacity-100 py-2 px-6 ${
-                      isActive ? `text-sail-500 underline` : ``
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+                            return (
+                                    <li>
+                                        <a
+                                                href={`${item.href}`}
+                                                class={`relative select-none w-full text-xs inline-block hover:underline transition duration-150 ease-out hover:opacity-100 py-2 px-6 ${
+                                                    isActive ? `text-sail-500 underline` : ``
+                                                }`}
+                                        >
+                                            {item.label}
+                                        </a>
+                                    </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="px-6 text-[11px] absolute bottom-10 hidden md:block">
-      <span class="block">© {currentYear} Alfin Surya</span>
+        <div class="px-6 absolute bottom-10 hidden md:block">
+            <div class="feeds mb-3 block inline-flex flex-col gap-1 border-b border-gray-200 pb-3">
+                <a href="/rss.xml" class="external inline-block text-[10px] grayscale">RSS
+                    Feeds </a>
+            </div>
+            <span class="block text-[11px]">© {currentYear} Alfin Surya</span>
+        </div>
     </div>
-  </div>
 </header>
