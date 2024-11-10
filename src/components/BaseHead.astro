@@ -4,6 +4,7 @@ import {GoogleFontsOptimizer} from "astro-google-fonts-optimizer";
 import {SEO} from "astro-seo";
 
 import {SITE_DESCRIPTION, SITE_TITLE} from "@/consts";
+import Posthog from "@components/posthog/Posthog.astro";
 
 interface Props {
     title?: string;
@@ -25,6 +26,8 @@ if (Astro.url.pathname == "/") {
         title = `${SITE_TITLE}. ${SITE_DESCRIPTION}`
     }
 }
+
+const IS_PROD = import.meta.env.PROD
 ---
 
 <!-- Global Metadata -->
@@ -65,3 +68,12 @@ if (Astro.url.pathname == "/") {
             ]
         }}
 />
+
+{(IS_PROD) &&
+<Posthog/>}
+
+<script is:inline type="module">
+    import {ClientJS} from 'clientjs';
+
+    window.ClientJS = ClientJS;
+</script>

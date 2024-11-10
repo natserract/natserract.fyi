@@ -109,7 +109,7 @@ const posts = (await getCollection("post")).sort(
                         <li class="last:mb-0 mb-1">
                             <a
                                     href={`/posts/${post.slug}`}
-                                    class="group block transition-all duration-150 ease-out"
+                                    class="group block transition-all duration-150 ease-out ph-click-post"
                             >
                                 <h2
                                         class={`text-sail-500 font-semibold text-sm transition-all hover:underline duration-150 ease-out `}
@@ -123,3 +123,16 @@ const posts = (await getCollection("post")).sort(
         </div>
     </div>
 </Layout>
+
+<script>
+    import {trackEvent, POSTHOG_EVENT} from '@util/posthog'
+
+    const posts = document.querySelectorAll('.ph-click-post');
+    posts.forEach((post: any) => {
+        post.addEventListener('click', () => {
+            trackEvent(POSTHOG_EVENT.USER_CLICKED_POST, {
+                title: post.outerText
+            })
+        })
+    })
+</script>

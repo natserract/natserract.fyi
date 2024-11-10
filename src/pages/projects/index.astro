@@ -1,27 +1,43 @@
 ---
-import { getCollection } from "astro:content";
+import {getCollection} from "astro:content";
 
 import Layout from "@layouts/Layout.astro";
 import Project from "@components/project/Project.astro";
 
 const projects = (await getCollection("project")).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 ---
 
 <Layout title="Projects">
-  <div class="min-h-screen">
-    <div class="mb-7 text-sm font-lato">
-      <h3 class="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond pb-2">
-        Projects
-      </h3>
-    </div>
+    <div class="min-h-screen">
+        <div class="mb-7 text-sm font-lato">
+            <h3 class="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond pb-2">
+                Projects
+            </h3>
+        </div>
 
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {projects.map((project) =>
-        <li>
-          <Project {...project} />
-        </li>)}
-    </ul>
-  </div>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project) =>
+                    <li>
+                        <Project {...project}/>
+                    </li>)}
+        </ul>
+    </div>
 </Layout>
+
+<script>
+    import {trackEvent, POSTHOG_EVENT} from '@util/posthog'
+
+    const projects = document.querySelectorAll('.ph-click-project');
+    projects.forEach((project: any) => {
+        const projectTitle = project?.children[1]?.children[0]?.outerText
+        if (projectTitle) {
+            project.addEventListener('click', () => {
+                trackEvent(POSTHOG_EVENT.USER_CLICKED_POST, {
+                    title: projectTitle
+                })
+            })
+        }
+    })
+</script>
