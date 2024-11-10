@@ -125,6 +125,12 @@ const posts = (await getCollection("post")).sort(
 </Layout>
 
 <script>
+    // Track event once page loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        trackEvent(POSTHOG_EVENT.USER_VISITED_MAIN_PAGE)
+    });
+
+    // Track event on clicked post
     import {trackEvent, POSTHOG_EVENT} from '@util/posthog'
 
     const posts = document.querySelectorAll('.ph-click-post');

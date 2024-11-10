@@ -2,8 +2,9 @@ import posthog from "posthog-js";
 import {getVisitorInfo} from "@util/fingerprint.ts";
 
 export enum POSTHOG_EVENT {
+    USER_VISITED_MAIN_PAGE = 'user_visited_main_page',
     USER_CLICKED_POST = 'user_clicked_post',
-    USER_CLICKED_PROJECTS_PAGE = 'user_clicked_projects_page',
+    USER_VISITED_PROJECTS_PAGE = 'user_clicked_projects_page',
     USER_CLICKED_PROJECT = 'user_clicked_project',
 }
 

@@ -27,6 +27,12 @@ const projects = (await getCollection("project")).sort(
 </Layout>
 
 <script>
+    // Track event once page loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        trackEvent(POSTHOG_EVENT.USER_VISITED_PROJECTS_PAGE)
+    });
+
+    // Track event on clicked project
     import {trackEvent, POSTHOG_EVENT} from '@util/posthog'
 
     const projects = document.querySelectorAll('.ph-click-project');
@@ -34,7 +40,7 @@ const projects = (await getCollection("project")).sort(
         const projectTitle = project?.children[1]?.children[0]?.outerText
         if (projectTitle) {
             project.addEventListener('click', () => {
-                trackEvent(POSTHOG_EVENT.USER_CLICKED_POST, {
+                trackEvent(POSTHOG_EVENT.USER_CLICKED_PROJECT, {
                     title: projectTitle
                 })
             })
