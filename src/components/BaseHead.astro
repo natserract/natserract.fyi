@@ -71,9 +71,3 @@ const IS_PROD = import.meta.env.PROD
 
 {(IS_PROD) &&
 <Posthog/>}
-
-<script is:inline type="module">
-    import {ClientJS} from 'clientjs';
-
-    window.ClientJS = ClientJS;
-</script>

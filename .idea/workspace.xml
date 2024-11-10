@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f0db839-0c2f-4252-8839-8e60135fced6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/posthog/Posthog.astro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/posthog/posthog.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/fingerprint.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/posthog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/BaseHead.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseHead.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/project/Project.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/project/Project.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/projects/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/projects/index.astro" afterDir="false" />
-    </list>
+    <list default="true" id="6f0db839-0c2f-4252-8839-8e60135fced6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +93,7 @@
       <workItem from="1731031201412" duration="41318000" />
       <workItem from="1731080053905" duration="6110000" />
       <workItem from="1731086236223" duration="717000" />
-      <workItem from="1731201181834" duration="8812000" />
+      <workItem from="1731201181834" duration="9309000" />
     </task>
     <servers />
   </component>
