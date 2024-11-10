@@ -6,10 +6,12 @@ import BackToTop from "@components/BackToTop";
 
 type AstroComponentFactory = any;
 type Props = CollectionEntry<"post">["data"] & {
-    of: AstroComponentFactory
+    of: AstroComponentFactory;
+    backTo: "/" | "/notes" | "/talks" | "/projects";
+    backText: string;
 };
 
-const {title, of: Slot} = Astro.props;
+const {title, of: Slot, backTo, backText} = Astro.props;
 ---
 
 <div class="flex-1">
@@ -38,8 +40,8 @@ const {title, of: Slot} = Astro.props;
         <div class="flex flex-row items-center gap-2 mt-20">
             <BackToTop client:load/>
             <span class="block text-gray-400 text-xs">/</span>
-            <a href="/posts" class="hover:underline text-xs">
-                Posts
+            <a href={backTo} class="hover:underline text-xs">
+                {backText}
             </a>
         </div>
     </div>
