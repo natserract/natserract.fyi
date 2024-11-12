@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f0db839-0c2f-4252-8839-8e60135fced6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/analytics/Analytics.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/analytics/index.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/Layout.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/Layout.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,24 +45,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/alfin/home/projects/engineering-blog/pages/notes&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/alfin/home/projects/engineering-blog/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/alfin/home/projects/engineering-blog/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/alfin/home/projects/engineering-blog",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "prettierjs.PrettierConfiguration.Package": "/Users/alfin/home/projects/engineering-blog/node_modules/prettier",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "ts.external.directory.path": "/Users/alfin/home/projects/engineering-blog/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pages/notes" />
@@ -66,11 +70,11 @@
       <recent name="$PROJECT_DIR$/pages/projects" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/analytics" />
       <recent name="$PROJECT_DIR$/src/components/posthog" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/components/notes" />
       <recent name="$PROJECT_DIR$/src/components/home" />
-      <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -95,7 +99,9 @@
       <workItem from="1731031201412" duration="41318000" />
       <workItem from="1731080053905" duration="6110000" />
       <workItem from="1731086236223" duration="717000" />
-      <workItem from="1731201181834" duration="10517000" />
+      <workItem from="1731201181834" duration="12149000" />
+      <workItem from="1731322377669" duration="40000" />
+      <workItem from="1731371925326" duration="8440000" />
     </task>
     <servers />
   </component>
