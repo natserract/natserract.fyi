@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f0db839-0c2f-4252-8839-8e60135fced6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/content/note/building-a-cloud-native-infrastructure.mdx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/content/note/designing-idempotency.mdx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/content/note/vps.mdx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/project/toktik.mdx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FormatOnSaveOptions">
-    <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -101,6 +102,7 @@
       <workItem from="1732428468273" duration="2708000" />
       <workItem from="1732498186457" duration="21000" />
       <workItem from="1732675636358" duration="445000" />
+      <workItem from="1742820042178" duration="1089000" />
     </task>
     <servers />
   </component>

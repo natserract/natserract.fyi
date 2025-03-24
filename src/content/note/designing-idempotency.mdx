@@ -1,0 +1,24 @@
+---
+title: Designing Idempotency
+date: 2025-04-24T16:00:00.000Z
+keywords: idempotent, idempotency, race condition, redis
+---
+
+Too many teams think, "we need get..."
+
+- "a web-scale product in AWS to handle this"
+- "a distributed lock system implemented in Redis"
+- "an exactly-once message delivery system"
+
+That's headed in the wrong direction.
+
+**The design pattern matters more than the tech:**
+
+1. Generate a unique id (e.g. v4 UUID) and attach it to every call
+2. Handle failure gracefully with an exponential backoff + jitter
+3. Record both the attempt AND the complete result
+4. Check records before execution
+
+This is not to say doing this is easy and that there aren't contexts will sway you on specific choices. That said, it's really easy to caught up trying to over engineer and use some shiny new tool when it's the approach itself that matters more.
+
+> Source: https://www.linkedin.com/feed/update/urn:li:activity:7304829630883012609?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7304829630883012609%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29
