@@ -1,0 +1,44 @@
+---
+title: CustomerCare AI
+description: They have ERP system in behind that connected to Amazon marketplace. The client needs a conversational AI agent to improve their customer experience by providing 24/7 technical support, reducing costs, optimizing support agent workloads, and more.
+cover: https://res.cloudinary.com/dqo6txtrv/image/upload/v1753770515/Screenshot_2025-07-09_at_22.10.18_k7gesu.png
+date: 2025-07-11
+category: AI, Customer Service
+---
+
+The client is a leading e-commerce company based in Germany that provides an ERP system allowing users to connect and manage multiple marketplaces, such as Amazon, which allows them to manage their inventory, sales, and customer data efficiently.
+
+The client needs a conversational AI agent to improve their customer experience by providing 24/7 technical support, reducing costs, optimizing support agent workloads, and more.
+
+**Workflow**:
+
+![diagram](https://res.cloudinary.com/dysawpalu/image/upload/v1748923104/Editor___Mermaid_Chart-2025-06-03-035737_l2m9h6.png)
+
+## Main Flow
+1. Accepts customer calls (inbound) via [Vapi](https://vapi.ai/)
+2. NLU (Natural Language Understanding - Voice). Analyze user input to determine the user's intent (topic), which is the purpose or goal behind the message.  For example, Order Status Inquiry, Refund Request, Speak to Human, or ask a question.
+3. Triggers an n8n workflow to:
+    - Query order status from an API/database.
+    - Email the customer if requested.
+    - Any task required from customer
+4. If the AI agent fails or is uncertain, the call is escalated to a human agent.
+
+### **Technical Challenges**:
+- Spelling variations and typos
+- Multiple intents in a single message
+- Industry-specific terminology and jargon
+
+## Result
+
+#### Achieved 96% success rate with low latency.
+![metrics](https://res.cloudinary.com/dqo6txtrv/image/upload/v1753770515/Screenshot_2025-07-09_at_22.10.18_k7gesu.png)
+
+#### N8N Workflow
+![n8n-workflow](https://res.cloudinary.com/dqo6txtrv/image/upload/v1753770527/Screenshot_2025-07-09_at_22.10.28_zzaggh.png)
+
+#### User interface to see call logs, cost and etc.
+![interface](https://res.cloudinary.com/dqo6txtrv/image/upload/v1753770624/Screenshot_2025-07-29_at_14.29.54_so4vzj.png)
+
+### Call Logs
+
+See [call_logs.json](https://gist.github.com/natserract/62f03474051d51420866cf8869f5db42)
