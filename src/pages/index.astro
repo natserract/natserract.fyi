@@ -4,10 +4,15 @@ import {getCollection} from "astro:content";
 
 import Layout from "@layouts/Layout.astro";
 import OssActivities from "@components/home/OssActivities.astro";
+import Project from "@components/project/Project.astro";
 
 const posts = (await getCollection("post")).sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+const projects = (await getCollection("project")).sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+).slice(0, 3);
 ---
 
 <Layout>
@@ -51,7 +56,7 @@ const posts = (await getCollection("post")).sort(
                 <strong class="font-bold">Area of interest:</strong>
             </p>
             <p class="mb-2">
-                DX(developer experience), Software Architecture, Programming Language,
+                DX(developer experience), Software Architecture, AI, Programming Language,
                 Remote Working, much more.
             </p>
             <blockquote class="mt-5 bg-[#f8f9fa] p-2 border border-[#a2a9b1]">
@@ -99,6 +104,31 @@ const posts = (await getCollection("post")).sort(
         </div>
 
         <OssActivities/>
+
+        <div class="pb-5">
+            <div class="flex items-center justify-between border-b border-gray-250 pb-2 mb-5  ">
+                <h3 class="text-2xl font-bold font-eb-garamond ">
+                    Latest Projects
+                </h3>
+
+                <a
+                        class="text-xs inline-block opacity-80 grayscale transition ease-out duration-150 pr-2"
+                        href="/projects"
+                >
+                    See All Projects
+                </a>
+            </div>
+
+
+            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {projects.map((project) =>
+                        <li>
+                            <Project {...project}/>
+                        </li>)}
+            </ul>
+
+
+        </div>
 
         <div>
             <h3 class="text-2xl font-bold mb-5 border-b border-gray-250 font-eb-garamond pb-2">
