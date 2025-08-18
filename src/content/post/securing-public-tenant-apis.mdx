@@ -90,7 +90,7 @@ const apiAuth = async (apiUrl: string) => {
 await apiAuth(`/v1/clients/listings`);
 ```
 
-As you can see, it will call 2 endpoints. First, it calls `/auth/signature` to generate signature key. Then it calls `/v1/clients/listings` with the generated signature to get the list of clients.
+As you can see, it will call 2 endpoints. First, it calls `/auth/signature` to generate signature key. Then it calls `/v1/clients/listings` with the generated signature to get the list of listings.
 
 - `/auth/signature` response:
 
